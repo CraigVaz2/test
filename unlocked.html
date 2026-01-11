@@ -10,23 +10,22 @@
   <div class="container">
     <h1>You Found It.</h1>
 
-    <p>
-      I was hoping you would.
-    </p>
+    <p>I was hoping you would.</p>
 
-    <p>
-      Some things are easier to hide than to say.
-    </p>
+    <p>Some things are easier to hide than to say.</p>
 
-    <p class="question">
+    <p class="question" id="questionText">
       Will you be my Valentine?
     </p>
 
     <div class="buttons">
-      <button class="yes">Yes ❤️</button>
+      <button class="yes" onclick="accept()">Yes ❤️</button>
+      <button class="no" id="noBtn">No</button>
     </div>
+
+    <p id="response"></p>
   </div>
 
+  <script src="script.js"></script>
 </body>
 </html>
-
