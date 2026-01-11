@@ -50,8 +50,11 @@ function accept() {
     song.play().catch(err => console.log("Audio blocked:", err));
   }
 
-  document.getElementById("response").textContent =
-    "Case closed. I’m really glad it’s you. ❤️";
+const response = document.getElementById("response");
+if (response) {
+  response.textContent = "Case closed. I’m really glad it’s you. ❤️";
+}
+
 
   startHearts();
   showAfterYesButtons();
