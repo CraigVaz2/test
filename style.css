@@ -155,3 +155,53 @@ body.unlocked .container {
     opacity: 0;
   }
 }
+
+/* LOCATION BACKGROUND */
+body.location {
+  background: radial-gradient(
+      circle at center,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.9)
+    ),
+    linear-gradient(180deg, #111, #000);
+  position: relative;
+}
+
+/* Optional background image support */
+body.location::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("house.jpg"); /* optional */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+  z-index: 0;
+}
+
+/* Dark overlay for creepiness */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+}
+
+/* Foreground content */
+body.location .container {
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #333;
+}
+
+/* Text tweaks */
+body.location h1 {
+  letter-spacing: 4px;
+}
+
+.warning {
+  color: #aaa;
+  font-size: 0.9em;
+}
+
