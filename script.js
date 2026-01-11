@@ -62,21 +62,7 @@ if (response) {
 
 
 /* HEART ANIMATION */
-function startHearts() {
-  const container = document.getElementById("hearts-container");
 
-  setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 15 + "px";
-
-    container.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 4000);
-  }, 300);
-}
 function startHearts() {
   setInterval(() => {
     const heart = document.createElement("div");
