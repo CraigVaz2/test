@@ -1,1 +1,82 @@
+body {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  background-color: #0f0f0f;
+  color: #eaeaea;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  max-width: 420px;
+  padding: 30px;
+  border: 1px solid #444;
+}
+
+h1 {
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  color: #999;
+  font-size: 0.9em;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  background: #111;
+  border: 1px solid #555;
+  color: #fff;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  background: #222;
+  color: #fff;
+  border: 1px solid #777;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #333;
+}
+
+.error {
+  margin-top: 10px;
+  color: #ff6666;
+}
+
+/* UNLOCKED PAGE STYLES */
+body.unlocked {
+  background-color: #fff;
+  color: #222;
+  font-family: 'Georgia', serif;
+}
+
+body.unlocked .container {
+  border: none;
+  text-align: center;
+}
+
+body.unlocked h1 {
+  letter-spacing: normal;
+}
+
+.question {
+  font-size: 1.5em;
+  margin-top: 30px;
+}
+
+.yes {
+  background: #ff4d6d;
+  border: none;
+  color: white;
+  font-size: 1.1em;
+}
 
