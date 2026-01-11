@@ -205,3 +205,17 @@ body.location h1 {
   font-size: 0.9em;
 }
 
+.heart {
+  position: fixed;
+  bottom: -50px;
+  animation: floatUp 4s linear;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
