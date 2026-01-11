@@ -57,7 +57,7 @@ if (response) {
 
 
   startHearts();
-  showAfterYesButtons();
+  // showAfterYesButtons();
 }
 
 
