@@ -2,21 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Case File</title>
+  <title>Final Location</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="locked">
+<body class="locked location">
+
+  <div class="overlay"></div>
 
   <div class="container">
-    <h1>CASE FILE</h1>
+    <h1>FINAL LOCATION</h1>
 
-    <p class="subtitle">Status: Unresolved</p>
+    <p class="subtitle">Last Known Address</p>
 
-    <p>This file is restricted.</p>
-    <p>Enter the correct authorization code to proceed.</p>
+    <p>
+      You’ve followed every lead.
+    </p>
 
-    <input type="text" id="codeInput" placeholder="Authorization Code">
-    <button onclick="checkCode()">Confirm</button>
+    <p>
+      This is the only place left.
+    </p>
+
+    <p class="warning">
+      Entry requires the correct code.
+    </p>
+
+    <input type="password" id="codeInput" placeholder="Door Code">
+    <button onclick="checkCode()">Unlock</button>
 
     <p id="error" class="error"></p>
   </div>
