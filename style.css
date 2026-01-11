@@ -5,9 +5,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
-/* LOCKED / INVESTIGATIVE */
+/* LOCKED */
 body.locked {
   background-color: #0f0f0f;
   color: #eaeaea;
@@ -18,6 +19,8 @@ body.locked {
   max-width: 420px;
   padding: 30px;
   border: 1px solid #444;
+  position: relative;
+  z-index: 2;
 }
 
 h1 {
@@ -41,23 +44,16 @@ input {
 button {
   margin-top: 15px;
   padding: 10px;
-  width: 100%;
-  background: #222;
-  color: #fff;
-  border: 1px solid #777;
   cursor: pointer;
 }
 
-button:hover {
-  background: #333;
-}
-
+/* ERROR */
 .error {
   margin-top: 10px;
   color: #ff6666;
 }
 
-/* UNLOCKED / ROMANTIC */
+/* UNLOCKED */
 body.unlocked {
   background-color: #fff;
   color: #222;
@@ -69,10 +65,6 @@ body.unlocked .container {
   text-align: center;
 }
 
-body.unlocked h1 {
-  letter-spacing: normal;
-}
-
 .question {
   font-size: 1.6em;
   margin-top: 30px;
@@ -82,9 +74,8 @@ body.unlocked h1 {
 .buttons {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 40px;
   gap: 80px;
+  margin-top: 40px;
 }
 
 @media (max-width: 600px) {
@@ -94,7 +85,7 @@ body.unlocked h1 {
   }
 }
 
-/* YES / NO STYLES */
+/* YES / NO */
 .yes {
   background: #ff4d6d;
   border: none;
@@ -109,7 +100,58 @@ body.unlocked h1 {
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-#response {
-  margin-top: 30px;
-  font-size: 1.2em;
+/* AFTER YES */
+.hidden {
+  display: none;
+}
+
+.after-yes {
+  margin-top: 40px;
+}
+
+.after-text {
+  font-size: 1.4em;
+  margin-bottom: 20px;
+}
+
+.after-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.after-buttons button {
+  background: #ffb3c6;
+  border: none;
+  padding: 12px;
+  font-size: 1em;
+}
+
+/* HEARTS */
+#hearts-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.heart {
+  position: absolute;
+  color: #ff4d6d;
+  font-size: 20px;
+  animation: fall 4s linear forwards;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
 }
