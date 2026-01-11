@@ -1,9 +1,8 @@
-/* PASSWORD CHECK */
+/* PASSWORD */
 function checkCode() {
   const input = document.getElementById("codeInput").value.trim();
   const error = document.getElementById("error");
-
-  const correctCode = "1234"; // ← replace later with Sudoku result
+  const correctCode = "1234"; // replace later
 
   if (input === correctCode) {
     window.location.href = "unlocked.html";
@@ -12,7 +11,7 @@ function checkCode() {
   }
 }
 
-/* NO BUTTON BEHAVIOR */
+/* NO BUTTON DODGE */
 const noBtn = document.getElementById("noBtn");
 const question = document.getElementById("questionText");
 
@@ -36,16 +35,40 @@ function dodgeNo() {
   const y = Math.random() * 200 - 100;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
 
-  if (pleaLevel < pleas.length - 1) {
-    pleaLevel++;
-  }
-
+  if (pleaLevel < pleas.length - 1) pleaLevel++;
   question.textContent = pleas[pleaLevel];
   noBtn.style.opacity = Math.max(0.3, 1 - pleaLevel * 0.15);
 }
 
 /* YES CLICK */
 function accept() {
-  document.getElementById("response").textContent =
-    "Case closed. I’m really glad it’s you. ❤️";
+  // Hide choice buttons
+  document.getElementById("choiceButtons").style.display = "none";
+
+  // Show new content
+  document.getElementById("afterYes").classList.remove("hidden");
+
+  // Play music
+  const song = document.getElementById("loveSong");
+  song.play();
+
+  // Start hearts
+  startHearts();
+}
+
+/* HEART ANIMATION */
+function startHearts() {
+  const container = document.getElementById("hearts-container");
+
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+
+    container.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 4000);
+  }, 300);
 }
