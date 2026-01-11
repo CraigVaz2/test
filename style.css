@@ -1,12 +1,17 @@
+/* GENERAL */
 body {
   margin: 0;
-  font-family: 'Courier New', monospace;
-  background-color: #0f0f0f;
-  color: #eaeaea;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* LOCKED / INVESTIGATIVE */
+body.locked {
+  background-color: #0f0f0f;
+  color: #eaeaea;
+  font-family: "Courier New", monospace;
 }
 
 .container {
@@ -52,11 +57,11 @@ button:hover {
   color: #ff6666;
 }
 
-/* UNLOCKED PAGE STYLES */
+/* UNLOCKED / ROMANTIC */
 body.unlocked {
   background-color: #fff;
   color: #222;
-  font-family: 'Georgia', serif;
+  font-family: Georgia, serif;
 }
 
 body.unlocked .container {
@@ -69,10 +74,27 @@ body.unlocked h1 {
 }
 
 .question {
-  font-size: 1.5em;
+  font-size: 1.6em;
   margin-top: 30px;
 }
 
+/* BUTTON LAYOUT */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  gap: 80px;
+}
+
+@media (max-width: 600px) {
+  .buttons {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+/* YES / NO STYLES */
 .yes {
   background: #ff4d6d;
   border: none;
@@ -80,3 +102,14 @@ body.unlocked h1 {
   font-size: 1.1em;
 }
 
+.no {
+  background: #ccc;
+  color: #333;
+  border: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+#response {
+  margin-top: 30px;
+  font-size: 1.2em;
+}
