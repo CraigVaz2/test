@@ -7,24 +7,38 @@
 </head>
 <body class="unlocked">
 
+  <!-- Background hearts container -->
+  <div id="hearts-container"></div>
+
   <div class="container">
     <h1>You Found It.</h1>
 
     <p>I was hoping you would.</p>
-
     <p>Some things are easier to hide than to say.</p>
 
     <p class="question" id="questionText">
       Will you be my Valentine?
     </p>
 
-    <div class="buttons">
+    <div class="buttons" id="choiceButtons">
       <button class="yes" onclick="accept()">Yes ❤️</button>
       <button class="no" id="noBtn">No</button>
     </div>
 
-    <p id="response"></p>
+    <!-- Appears only after Yes -->
+    <div class="after-yes hidden" id="afterYes">
+      <p class="after-text">Case closed. ❤️</p>
+
+      <div class="after-buttons">
+        <button>💌 Read the Letter</button>
+        <button>📅 See the Plan</button>
+        <button>🎁 One More Thing</button>
+      </div>
+    </div>
   </div>
+
+  <!-- Audio (hidden) -->
+  <audio id="loveSong" src="valentine.mp3"></audio>
 
   <script src="script.js"></script>
 </body>
