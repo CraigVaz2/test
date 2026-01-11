@@ -42,19 +42,21 @@ function dodgeNo() {
 
 /* YES CLICK */
 function accept() {
-  // Hide choice buttons
-  document.getElementById("choiceButtons").style.display = "none";
-
-  // Show new content
-  document.getElementById("afterYes").classList.remove("hidden");
-
-  // Play music
   const song = document.getElementById("loveSong");
-  song.play();
 
-  // Start hearts
+  if (song) {
+    song.volume = 0.6;
+    song.currentTime = 0;
+    song.play().catch(err => console.log("Audio blocked:", err));
+  }
+
+  document.getElementById("response").textContent =
+    "Case closed. I’m really glad it’s you. ❤️";
+
   startHearts();
+  showAfterYesButtons();
 }
+
 
 /* HEART ANIMATION */
 function startHearts() {
