@@ -86,3 +86,23 @@ function startHeartsBurst() {
   }, 120);
 }
 
+function accept() {
+  // Play music
+  const song = document.getElementById("valentine");
+  if (song) {
+    song.currentTime = 0;
+    song.volume = 0.6;
+    song.play().catch(() => {});
+  }
+
+  startHeartsBurst();
+
+  if (questionText) questionText.style.display = "none";
+  if (choiceButtons) choiceButtons.style.display = "none";
+
+  setTimeout(() => {
+    if (afterYes) afterYes.classList.remove("hidden");
+  }, 900);
+}
+
+
