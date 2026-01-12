@@ -249,6 +249,33 @@ body.location h1 {
   cursor: pointer;
 }
 
+.icon-row {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  margin-top: 60px;
+}
+
+.icon {
+  font-size: 4.5em;
+  position: relative;
+}
+
+.icon span {
+  position: absolute;
+  bottom: -12px;
+  right: -12px;
+  font-size: 0.5em;
+}
+
+.icon.locked {
+  opacity: 0.4;
+}
+
+.icon.active {
+  cursor: pointer;
+}
+
 
 
 
