@@ -45,6 +45,7 @@ button {
   margin-top: 15px;
   padding: 10px;
   cursor: pointer;
+  transition: transform 0.25s ease;
 }
 
 /* ERROR */
@@ -205,13 +206,6 @@ body.location h1 {
   font-size: 0.9em;
 }
 
-.heart {
-  position: fixed;
-  bottom: -50px;
-  animation: floatUp 4s linear;
-  pointer-events: none;
-}
-
 @keyframes floatUp {
   to {
     transform: translateY(-110vh);
@@ -219,15 +213,7 @@ body.location h1 {
   }
 }
 
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  gap: 60px;
-  margin-top: 40px;
-}
 
-button {
-  transition: transform 0.25s ease;
-}
+
 
 
