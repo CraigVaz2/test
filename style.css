@@ -222,6 +222,33 @@ body.location h1 {
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
+.icon-row {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 60px;
+}
+
+.icon {
+  font-size: 4em;
+  position: relative;
+}
+
+.icon span {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  font-size: 0.6em;
+}
+
+.icon.locked {
+  opacity: 0.5;
+}
+
+.icon.active {
+  cursor: pointer;
+}
+
 
 
 
