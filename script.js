@@ -43,9 +43,22 @@ function resist(e) {
     Math.max(0.3, 1 - pleaLevel * 0.2);
 
   // Grow YES + change text ON BUTTON
-  yesBtn.style.transform =
-    `scale(${1 + pleaLevel * 0.25})`;
-  yesBtn.textContent = pleas[pleaLevel];
+yesBtn.textContent = pleas[pleaLevel];
+
+if (pleaLevel < pleas.length - 1) {
+  yesBtn.style.transform = `scale(${1 + pleaLevel * 0.35})`;
+} else {
+  // Final takeover
+  yesBtn.style.position = "fixed";
+  yesBtn.style.top = "0";
+  yesBtn.style.left = "0";
+  yesBtn.style.width = "100vw";
+  yesBtn.style.height = "100vh";
+  yesBtn.style.fontSize = "2.5em";
+  yesBtn.style.borderRadius = "0";
+  yesBtn.style.zIndex = "999";
+}
+
 }
 
 
