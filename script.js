@@ -66,17 +66,25 @@ if (pleaLevel < pleas.length - 1) {
 /* HEART ANIMATION */
 
 function startHearts() {
-  setInterval(() => {
-    const heart = document.createElement("div");
-    heart.textContent = "❤️";
-    heart.className = "heart";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 20 + "px";
-    document.body.appendChild(heart);
+  let count = 0;
 
-    setTimeout(() => heart.remove(), 4000);
-  }, 300);
+  const burst = setInterval(() => {
+    for (let i = 0; i < 6; i++) {
+      const heart = document.createElement("div");
+      heart.textContent = "❤️";
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 30 + 25 + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 3000);
+    }
+
+    count++;
+    if (count > 15) clearInterval(burst);
+  }, 120);
 }
+
 
 function accept() {
   const song = document.getElementById("loveSong");
