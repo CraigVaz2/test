@@ -92,7 +92,8 @@ function accept() {
   if (song) {
     song.currentTime = 0;
     song.volume = 0.6;
-    song.play().catch(() => {});
+    song.muted = false;
+    song.play();
   }
 
   startHeartsBurst();
