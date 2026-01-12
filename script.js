@@ -66,3 +66,23 @@ function resist(e) {
     yesBtn.style.zIndex = "999";
   }
 }
+
+function startHeartsBurst() {
+  let bursts = 0;
+
+  const interval = setInterval(() => {
+    for (let i = 0; i < 8; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 30 + 25 + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 3000);
+    }
+
+    bursts++;
+    if (bursts > 12) clearInterval(interval);
+  }, 120);
+}
+
