@@ -11,54 +11,43 @@ function checkCode() {
   }
 }
 
-/* NO BUTTON DODGE */
 const noBtn = document.getElementById("noBtn");
-const question = document.getElementById("questionText");
+const yesBtn = document.getElementById("yesBtn");
 
 let pleaLevel = 0;
 
 const pleas = [
-  "Will you be my Valentine?",
-  "Please be my Valentine?",
-  "Pretty please be my Valentine?",
-  "Pretty please with sprinkles be my Valentine?",
-  "Pretty please with extra sprinkles and a cherry on top be my Valentine?"
+  "Yes ❤️",
+  "Please ❤️",
+  "Pretty please ❤️",
+  "Pretty please with sprinkles ❤️",
+  "Please… it’s you ❤️"
 ];
 
 if (noBtn) {
-  noBtn.addEventListener("mouseover", dodgeNo);
-  noBtn.addEventListener("touchstart", dodgeNo);
+  noBtn.addEventListener("mouseover", resist);
+  noBtn.addEventListener("click", resist);
 }
 
-function dodgeNo() {
+function resist(e) {
+  e.preventDefault();
+
+  pleaLevel = Math.min(pleaLevel + 1, pleas.length - 1);
+
+  // Move + shrink NO
   const x = Math.random() * 200 - 100;
-  const y = Math.random() * 200 - 100;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  const y = Math.random() * 120 - 60;
+  noBtn.style.transform =
+    `translate(${x}px, ${y}px) scale(${1 - pleaLevel * 0.15})`;
+  noBtn.style.opacity =
+    Math.max(0.3, 1 - pleaLevel * 0.2);
 
-  if (pleaLevel < pleas.length - 1) pleaLevel++;
-  question.textContent = pleas[pleaLevel];
-  noBtn.style.opacity = Math.max(0.3, 1 - pleaLevel * 0.15);
+  // Grow YES + change text ON BUTTON
+  yesBtn.style.transform =
+    `scale(${1 + pleaLevel * 0.25})`;
+  yesBtn.textContent = pleas[pleaLevel];
 }
 
-/* YES CLICK */
-function accept() {
-  const song = document.getElementById("loveSong");
-
-  if (song) {
-    song.volume = 0.6;
-    song.currentTime = 0;
-    song.play().catch(err => console.log("Audio blocked:", err));
-  }
-
-const response = document.getElementById("response");
-if (response) {
-  response.textContent = "Case closed. I’m really glad it’s you. ❤️";
-}
-
-
-  startHearts();
-  // showAfterYesButtons();
-}
 
 
 /* HEART ANIMATION */
