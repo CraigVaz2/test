@@ -64,3 +64,32 @@ function startHearts() {
     setTimeout(() => heart.remove(), 4000);
   }, 300);
 }
+
+function accept() {
+  const song = document.getElementById("loveSong");
+  if (song) {
+    song.volume = 0.6;
+    song.currentTime = 0;
+    song.play().catch(() => {});
+  }
+
+  startHearts();
+
+  const buttons = document.getElementById("choiceButtons");
+  if (buttons) {
+    buttons.style.display = "none";
+  }
+
+  const question = document.getElementById("questionText");
+  if (question) {
+    question.textContent = "Case closed. It was you the whole time. ❤️";
+  }
+
+  setTimeout(() => {
+    const afterYes = document.getElementById("afterYes");
+    if (afterYes) {
+      afterYes.classList.remove("hidden");
+    }
+  }, 1200);
+}
+
