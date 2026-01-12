@@ -14,20 +14,50 @@ function checkCode() {
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 
-let pleaLevel = 0;
+if (noBtn && yesBtn) {
+  let pleaLevel = 0;
 
-const pleas = [
-  "Yes ❤️",
-  "Please ❤️",
-  "Pretty please ❤️",
-  "Pretty please with sprinkles ❤️",
-  "Please… it’s you ❤️"
-];
+  const pleas = [
+    "Yes ❤️",
+    "Please ❤️",
+    "Pretty please ❤️",
+    "Pretty please with sprinkles ❤️",
+    "Please… it’s you ❤️"
+  ];
 
-if (noBtn) {
   noBtn.addEventListener("mouseover", resist);
   noBtn.addEventListener("click", resist);
+
+  function resist(e) {
+    e.preventDefault();
+
+    pleaLevel = Math.min(pleaLevel + 1, pleas.length - 1);
+
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 120 - 60;
+
+    noBtn.style.transform =
+      `translate(${x}px, ${y}px) scale(${1 - pleaLevel * 0.15})`;
+    noBtn.style.opacity =
+      Math.max(0.3, 1 - pleaLevel * 0.2);
+
+    yesBtn.textContent = pleas[pleaLevel];
+
+    if (pleaLevel < pleas.length - 1) {
+      yesBtn.style.transform = `scale(${1 + pleaLevel * 0.35})`;
+    } else {
+      yesBtn.style.position = "fixed";
+      yesBtn.style.top = "0";
+      yesBtn.style.left = "0";
+      yesBtn.style.width = "100vw";
+      yesBtn.style.height = "100vh";
+      yesBtn.style.fontSize = "2.5em";
+      yesBtn.style.borderRadius = "0";
+      yesBtn.style.zIndex = "999";
+    }
+  }
 }
+
 
 function resist(e) {
   e.preventDefault();
