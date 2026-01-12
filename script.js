@@ -96,6 +96,17 @@ function accept() {
 
   startHearts();
 
+  document.getElementById("questionText").style.display = "none";
+  document.getElementById("choiceButtons").style.display = "none";
+
+  setTimeout(() => {
+    document.getElementById("afterYes").classList.remove("hidden");
+  }, 800);
+}
+
+
+  startHearts();
+
   const buttons = document.getElementById("choiceButtons");
   if (buttons) {
     buttons.style.display = "none";
