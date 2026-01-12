@@ -1,6 +1,6 @@
 /* =====================
    PASSWORD (index.html)
-===================== */
+   ===================== */
 function checkCode() {
   const input = document.getElementById("codeInput");
   const error = document.getElementById("error");
@@ -17,8 +17,8 @@ function checkCode() {
 }
 
 /* =====================
-   UNLOCKED PAGE LOGIC
-===================== */
+   YES / NO LOGIC (unlocked.html)
+   ===================== */
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 
@@ -42,7 +42,7 @@ function resist(e) {
 
   pleaLevel = Math.min(pleaLevel + 1, pleas.length - 1);
 
-  // Shrink + move NO
+  // Move + shrink NO
   const x = Math.random() * 200 - 100;
   const y = Math.random() * 120 - 60;
   noBtn.style.transform =
@@ -50,12 +50,13 @@ function resist(e) {
   noBtn.style.opacity =
     Math.max(0.3, 1 - pleaLevel * 0.2);
 
-  // Grow YES
+  // Grow YES + change text
   yesBtn.textContent = pleas[pleaLevel];
-  yesBtn.style.transform = `scale(${1 + pleaLevel * 0.35})`;
 
-  // Final takeover
-  if (pleaLevel === pleas.length - 1) {
+  if (pleaLevel < pleas.length - 1) {
+    yesBtn.style.transform = `scale(${1 + pleaLevel * 0.35})`;
+  } else {
+    // Full-screen takeover
     yesBtn.style.position = "fixed";
     yesBtn.style.top = "0";
     yesBtn.style.left = "0";
@@ -69,7 +70,7 @@ function resist(e) {
 
 /* =====================
    YES CLICK
-===================== */
+   ===================== */
 function accept() {
   const song = document.getElementById("loveSong");
   if (song) {
@@ -93,16 +94,16 @@ function accept() {
 }
 
 /* =====================
-   HEART TRANSITION
-===================== */
+   HEARTS
+   ===================== */
 function startHearts() {
-  let count = 0;
+  let bursts = 0;
 
-  const burst = setInterval(() => {
-    for (let i = 0; i < 8; i++) {
+  const interval = setInterval(() => {
+    for (let i = 0; i < 6; i++) {
       const heart = document.createElement("div");
-      heart.className = "heart";
       heart.textContent = "❤️";
+      heart.className = "heart";
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.fontSize = Math.random() * 30 + 25 + "px";
       document.body.appendChild(heart);
@@ -110,7 +111,7 @@ function startHearts() {
       setTimeout(() => heart.remove(), 3000);
     }
 
-    count++;
-    if (count > 15) clearInterval(burst);
+    bursts++;
+    if (bursts > 15) clearInterval(interval);
   }, 120);
 }
