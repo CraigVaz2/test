@@ -219,3 +219,15 @@ body.location h1 {
   }
 }
 
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+  margin-top: 40px;
+}
+
+button {
+  transition: transform 0.25s ease;
+}
+
+
