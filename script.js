@@ -89,6 +89,7 @@ function startHeartsBurst() {
 }
 
 function accept() {
+  console.log("Yes button was clicked!"); // This MUST show up now
   const song = document.getElementById("valentine");
   
   if (song) {
