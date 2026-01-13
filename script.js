@@ -1,3 +1,5 @@
+console.log("Script loaded and running!");
+
 function checkCode() {
   const input = document.getElementById("codeInput");
   const error = document.getElementById("error");
