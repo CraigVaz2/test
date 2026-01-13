@@ -79,83 +79,54 @@ function resist(e) {
 
 // 3. THE ACCEPT FUNCTION (Plays music and shows hearts)
 function accept() {
-  console.log("ACCEPT function called");
+  console.log("ACCEPT - Simple version");
   
-  // Hide the question and buttons
-  if (questionText) {
-    questionText.style.opacity = "0";
-    questionText.style.transition = "opacity 0.3s ease";
-    setTimeout(() => questionText.style.display = "none", 300);
-  }
-  
-  if (choiceButtons) {
-    choiceButtons.style.opacity = "0";
-    choiceButtons.style.transition = "opacity 0.3s ease";
-    setTimeout(() => choiceButtons.style.display = "none", 300);
-  }
-
-  // Show after-yes content
+  // Hide/show elements
+  if (questionText) questionText.style.display = "none";
+  if (choiceButtons) choiceButtons.style.display = "none";
   if (afterYes) {
     afterYes.classList.remove("hidden");
     afterYes.style.display = "block";
-    afterYes.style.opacity = "0";
-    setTimeout(() => {
-      afterYes.style.opacity = "1";
-      afterYes.style.transition = "opacity 0.5s ease";
-    }, 300);
   }
-
-  // Play audio with guaranteed play
-  playValentineAudio();
+  
+  // SIMPLE AUDIO PLAY - most reliable
+  const audio = document.getElementById('valentine');
+  
+  // Create a new audio context on user gesture
+  document.body.style.cursor = 'pointer';
+  
+  // Try multiple methods
+  const tryPlay = () => {
+    // Method 1: Direct play
+    audio.play().catch(e1 => {
+      console.log("Method 1 failed:", e1);
+      
+      // Method 2: Create clone and play
+      const audioClone = audio.cloneNode();
+      audioClone.volume = 1.0;
+      audioClone.play().catch(e2 => {
+        console.log("Method 2 failed:", e2);
+        
+        // Method 3: New Audio object
+        const newAudio = new Audio(audio.src);
+        newAudio.volume = 1.0;
+        newAudio.play().catch(e3 => {
+          console.log("Method 3 failed:", e3);
+          alert("Click anywhere to play music!");
+        });
+      });
+    });
+  };
+  
+  // Trigger play
+  tryPlay();
+  
+  // Also allow clicking anywhere to play
+  document.body.onclick = tryPlay;
   
   // Start hearts
   startHeartsBurst();
 }
-
-function playValentineAudio() {
-  const audio = document.getElementById('valentine');
-  
-  if (!audio) {
-    console.error("No audio element found!");
-    return;
-  }
-  
-  console.log("Playing valentine audio...");
-  
-  // CRITICAL: Set volume BEFORE playing
-  audio.volume = 0.7;
-  audio.currentTime = 0;
-  
-  // Use a click event to trigger play (browsers allow this)
-  const playAudio = () => {
-    audio.play()
-      .then(() => {
-        console.log("🎵 Audio is playing!");
-        // Fade in volume
-        audio.volume = 0.7;
-        setTimeout(() => {
-          audio.volume = 1.0;
-        }, 500);
-      })
-      .catch(error => {
-        console.log("Audio play failed:", error);
-        
-        // LAST RESORT: Create a new audio element
-        const newAudio = new Audio('./valentine.mp3');
-        newAudio.volume = 0.7;
-        newAudio.play()
-          .then(() => console.log("🎵 Audio playing via new element!"))
-          .catch(e => console.log("Final attempt failed:", e));
-      });
-  };
-  
-  // Trigger with a simulated user gesture
-  playAudio();
-  
-  // Also bind to any click as backup
-  document.addEventListener('click', playAudio, { once: true });
-}
-
 // 4. THE HEARTS FUNCTION
 function startHeartsBurst() {
   let bursts = 0;
