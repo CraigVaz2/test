@@ -276,6 +276,17 @@ body.location h1 {
   cursor: pointer;
 }
 
+#choiceButtons {
+  position: relative;
+  z-index: 9999 !important;
+}
+
+.yes, .no {
+  cursor: pointer;
+  position: relative;
+  z-index: 10000 !important;
+}
+
 
 
 
