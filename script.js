@@ -79,47 +79,81 @@ function resist(e) {
 
 // 3. THE ACCEPT FUNCTION (Plays music and shows hearts)
 function accept() {
-  console.log("Running accept function...");
-  const song = document.getElementById("valentine");
+  console.log("ACCEPT function called");
   
-  if (song) {
-    console.log("Audio element found:", song);
-    
-    // Reset the audio to beginning
-    song.currentTime = 0;
-    
-    // Set volume
-    song.volume = 1.0;
-    
-    // Play with better error handling
-    const playPromise = song.play();
-    
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          console.log("Audio playing successfully!");
-        })
-        .catch(error => {
-          console.error("Audio failed to play:", error);
-          // Try alternative approach
-          setTimeout(() => {
-            song.play().catch(e => console.error("Second attempt failed:", e));
-          }, 100);
-        });
-    }
-  } else {
-    console.error("Audio element with id 'valentine' not found!");
+  // Hide the question and buttons
+  if (questionText) {
+    questionText.style.opacity = "0";
+    questionText.style.transition = "opacity 0.3s ease";
+    setTimeout(() => questionText.style.display = "none", 300);
+  }
+  
+  if (choiceButtons) {
+    choiceButtons.style.opacity = "0";
+    choiceButtons.style.transition = "opacity 0.3s ease";
+    setTimeout(() => choiceButtons.style.display = "none", 300);
   }
 
-  if (questionText) questionText.style.display = "none";
-  if (choiceButtons) choiceButtons.style.display = "none";
-
+  // Show after-yes content
   if (afterYes) {
     afterYes.classList.remove("hidden");
-    afterYes.style.display = "block"; 
+    afterYes.style.display = "block";
+    afterYes.style.opacity = "0";
+    setTimeout(() => {
+      afterYes.style.opacity = "1";
+      afterYes.style.transition = "opacity 0.5s ease";
+    }, 300);
+  }
+
+  // Play audio with guaranteed play
+  playValentineAudio();
+  
+  // Start hearts
+  startHeartsBurst();
+}
+
+function playValentineAudio() {
+  const audio = document.getElementById('valentine');
+  
+  if (!audio) {
+    console.error("No audio element found!");
+    return;
   }
   
-  startHeartsBurst();
+  console.log("Playing valentine audio...");
+  
+  // CRITICAL: Set volume BEFORE playing
+  audio.volume = 0.7;
+  audio.currentTime = 0;
+  
+  // Use a click event to trigger play (browsers allow this)
+  const playAudio = () => {
+    audio.play()
+      .then(() => {
+        console.log("🎵 Audio is playing!");
+        // Fade in volume
+        audio.volume = 0.7;
+        setTimeout(() => {
+          audio.volume = 1.0;
+        }, 500);
+      })
+      .catch(error => {
+        console.log("Audio play failed:", error);
+        
+        // LAST RESORT: Create a new audio element
+        const newAudio = new Audio('./valentine.mp3');
+        newAudio.volume = 0.7;
+        newAudio.play()
+          .then(() => console.log("🎵 Audio playing via new element!"))
+          .catch(e => console.log("Final attempt failed:", e));
+      });
+  };
+  
+  // Trigger with a simulated user gesture
+  playAudio();
+  
+  // Also bind to any click as backup
+  document.addEventListener('click', playAudio, { once: true });
 }
 
 // 4. THE HEARTS FUNCTION
