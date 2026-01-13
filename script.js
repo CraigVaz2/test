@@ -83,10 +83,32 @@ function accept() {
   const song = document.getElementById("valentine");
   
   if (song) {
+    console.log("Audio element found:", song);
+    
+    // Reset the audio to beginning
+    song.currentTime = 0;
+    
+    // Set volume
     song.volume = 1.0;
-    song.play()
-      .then(() => console.log("Audio playing successfully!"))
-      .catch(err => console.error("Audio failed to play:", err));
+    
+    // Play with better error handling
+    const playPromise = song.play();
+    
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          console.log("Audio playing successfully!");
+        })
+        .catch(error => {
+          console.error("Audio failed to play:", error);
+          // Try alternative approach
+          setTimeout(() => {
+            song.play().catch(e => console.error("Second attempt failed:", e));
+          }, 100);
+        });
+    }
+  } else {
+    console.error("Audio element with id 'valentine' not found!");
   }
 
   if (questionText) questionText.style.display = "none";
