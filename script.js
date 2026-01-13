@@ -87,13 +87,24 @@ function startHeartsBurst() {
 }
 
 function accept() {
-  // Play music
   const song = document.getElementById("valentine");
+  
   if (song) {
-    song.currentTime = 0;
-    song.volume = 0.6;
-    song.muted = false;
-    song.play();
+    // This tells the browser to "wake up" the audio
+    song.load(); 
+    
+    // Use a promise to catch errors and see exactly why it's failing
+    const playPromise = song.play();
+
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        console.log("Playback started!");
+      }).catch(error => {
+        console.log("Playback failed: " + error);
+        // Fallback: Try playing again after a tiny delay
+        setTimeout(() => song.play(), 100);
+      });
+    }
   }
 
   startHeartsBurst();
@@ -101,9 +112,8 @@ function accept() {
   if (questionText) questionText.style.display = "none";
   if (choiceButtons) choiceButtons.style.display = "none";
 
-  setTimeout(() => {
-    if (afterYes) afterYes.classList.remove("hidden");
-  }, 900);
+  if (afterYes) {
+    afterYes.classList.remove("hidden");
+  }
 }
-
 
