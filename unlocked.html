@@ -7,6 +7,37 @@
 </head>
 <body class="unlocked">
 
+   <script>
+    // This script MUST be at the TOP of the body
+    let audioContextResumed = false;
+    
+    // Resume audio context on first user interaction
+    document.addEventListener('click', function resumeAudio() {
+      if (!audioContextResumed) {
+        // Create and resume audio context
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          const audioContext = new AudioContext();
+          if (audioContext.state === 'suspended') {
+            audioContext.resume();
+          }
+        }
+        
+        // Also play/pause the audio element to unlock it
+        const audio = document.getElementById('valentine');
+        if (audio) {
+          audio.play().then(() => {
+            audio.pause();
+            audio.currentTime = 0;
+          }).catch(e => console.log("Audio pre-unlocked"));
+        }
+        
+        audioContextResumed = true;
+        document.removeEventListener('click', resumeAudio);
+      }
+    }, { once: true });
+  </script>
+
   <!-- Background hearts container -->
   <div id="hearts-container"></div>
 
