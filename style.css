@@ -287,6 +287,34 @@ body.location h1 {
   z-index: 10000 !important;
 }
 
+/* Cinematic Sequence Styles */
+.fade-text {
+  font-family: "Courier New", monospace;
+  color: white;
+  font-size: 1.8rem;
+  animation: fadeInOut 3s forwards;
+  text-align: center;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: scale(0.9); }
+  20% { opacity: 1; transform: scale(1); }
+  80% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.1); }
+}
+
+#cinematic-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* Ensure the white screen transition is smooth */
+body.unlocked {
+  transition: background-color 2s ease;
+}
+
 
 
 
