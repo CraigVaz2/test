@@ -1,20 +1,75 @@
 console.log("Script loaded and running!");
 
 function checkCode() {
-  const input = document.getElementById("codeInput");
-  const error = document.getElementById("error");
+  const input = document.getElementById("codeInput").value.trim();
+  const loginUI = document.getElementById("login-ui");
+  const cinematicText = document.getElementById("cinematic-text");
 
-  if (!input || !error) {
-    alert("Elements not found");
-    return;
-  }
+  // YOUR NEW PASSWORD
+  if (input === "21426") {
+    // 1. Black out the screen and hide the login box
+    loginUI.classList.add("hidden");
+    cinematicText.classList.remove("hidden");
+    document.body.style.background = "black";
+    document.querySelector('.overlay').style.display = "none"; // Remove the dark filter
 
-  if (input.value.trim() === "1234") {
-    window.location.href = "unlocked.html";
+    // 2. Cinematic Sequence (The timing of each line)
+    setTimeout(() => { showCinematic("Do you see the suspect?"); }, 1000);
+    setTimeout(() => { showCinematic("Look closely..."); }, 4500);
+    setTimeout(() => { showCinematic("Its you....."); }, 7500);
+
+    // 3. The Grand Reveal (Switch to Valentine)
+    setTimeout(() => {
+      document.body.className = "unlocked"; 
+      document.body.style.background = "#fff";
+      
+      const mainContent = document.getElementById("main-content");
+      mainContent.innerHTML = `
+        <h1 style="color: #222;">...because you stole my heart.</h1>
+        <p class="question" id="questionText">Will you be my Valentine?</p>
+        <div class="buttons" id="choiceButtons">
+          <button class="yes" id="yesBtn">Yes ❤️</button>
+          <button class="no" id="noBtn">No</button>
+        </div>
+        <div class="after-yes hidden" id="afterYes">
+           <div class="icon-row">
+             <div class="icon locked">💌<span>🔒</span></div>
+             <div class="icon active" onclick="openCalendar()">📅</div>
+             <div class="icon locked">🎁<span>🔒</span></div>
+           </div>
+        </div>
+      `;
+      
+      // Re-link the buttons because they are brand new elements
+      attachValentineLogic();
+    }, 11000);
+
   } else {
-    error.textContent = "Access denied.";
+    document.getElementById("error").textContent = "Access denied.";
   }
 }
+
+function showCinematic(text) {
+  const cinematicText = document.getElementById("cinematic-text");
+  cinematicText.innerHTML = `<h2 class="fade-text">${text}</h2>`;
+}
+
+function attachValentineLogic() {
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  
+  if (noBtn) {
+    noBtn.addEventListener("mouseover", resist);
+    noBtn.addEventListener("click", resist);
+  }
+  
+  if (yesBtn) {
+    // This triggers the hearts and music
+    yesBtn.addEventListener("click", accept); 
+  }
+}
+
+// Ensure the "accept" function you already have handles the music and hearts.
 
 /* =====================
    UNLOCKED PAGE SETUP
