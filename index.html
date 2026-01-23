@@ -9,28 +9,20 @@
 
   <div class="overlay"></div>
 
-  <div class="container">
+<div class="container" id="main-content">
+  <div id="login-ui">
     <h1>FINAL LOCATION</h1>
-
     <p class="subtitle">Last Known Address</p>
-
-    <p>
-      You’ve followed every lead.
-    </p>
-
-    <p>
-      This is the only place left.
-    </p>
-
-    <p class="warning">
-      Entry requires the correct code.
-    </p>
-
+    <p>You’ve followed every lead.</p>
+    <p>This is the only place left.</p>
+    <p class="warning">Entry requires the correct code.</p>
     <input type="password" id="codeInput" placeholder="Door Code">
     <button onclick="checkCode()">Unlock</button>
-
     <p id="error" class="error"></p>
   </div>
+  
+  <div id="cinematic-text" class="hidden"></div>
+</div>
 
   <script src="script.js"></script>
 </body>
