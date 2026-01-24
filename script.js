@@ -1,88 +1,186 @@
-let pleaLevel = 0;
-const pleas = ["Yes ❤️", "Please ❤️", "Pretty please ❤️", "Pretty please with sprinkles ❤️", "Please… it’s you ❤️", "Okay fine ❤️"];
-
-function checkCode() {
-  const input = document.getElementById("codeInput").value.trim();
-  const loginUI = document.getElementById("login-ui");
-  const cinematicText = document.getElementById("cinematic-text");
-
-  if (input === "21426") {
-    loginUI.classList.add("hidden");
-    cinematicText.classList.remove("hidden");
-    document.body.classList.add("blackout");
-
-    setTimeout(() => { showCinematic("Do you see the suspect?", false); }, 1000);
-    setTimeout(() => { showCinematic("Look closely...", false); }, 6500);
-    setTimeout(() => { showCinematic("Its you.....", true); }, 12000); 
-
-    setTimeout(() => {
-      document.body.className = "unlocked"; 
-      document.body.style.background = "#fff";
-      document.getElementById("main-content").innerHTML = `
-        <h1 style="color: #222; font-family: Georgia, serif;">...because you stole my heart.</h1>
-        <p class="question" id="questionText">Will you be my Valentine?</p>
-        <div class="buttons" id="choiceButtons">
-          <button class="yes" id="yesBtn">Yes ❤️</button>
-          <button class="no" id="noBtn">No</button>
-        </div>
-        <div class="after-yes hidden" id="afterYes">
-           <div class="icon-row">
-             <div class="icon locked">💌<span>🔒</span></div>
-             <div class="icon active" onclick="alert('February 14th @ 7:00 PM. I will pick you up! ❤️')">📅</div>
-             <div class="icon locked">🎁<span>🔒</span></div>
-           </div>
-        </div>`;
-      
-      window.yesBtn = document.getElementById("yesBtn");
-      window.noBtn = document.getElementById("noBtn");
-      window.questionText = document.getElementById("questionText");
-      window.choiceButtons = document.getElementById("choiceButtons");
-      window.afterYes = document.getElementById("afterYes");
-
-      window.noBtn.addEventListener("mouseover", resist);
-      window.noBtn.addEventListener("click", resist);
-      window.yesBtn.addEventListener("click", accept);
-    }, 18000);
-  } else {
-    document.getElementById("error").textContent = "Access denied.";
-  }
+/* GENERAL */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #000 !important;
 }
 
-function showCinematic(text, isBottom) {
-  const div = document.getElementById("cinematic-text");
-  div.innerHTML = `<h2 class="fade-text ${isBottom ? 'bottom-text' : ''}">${text}</h2>`;
+/* LOCKED STATE & BACKGROUND */
+body.locked {
+  color: #eaeaea;
+  font-family: "Courier New", monospace;
 }
 
-function resist(e) {
-  if (e) e.preventDefault();
-  pleaLevel = Math.min(pleaLevel + 1, pleas.length - 1);
-  window.noBtn.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 120 - 60}px) scale(${1 - pleaLevel * 0.15})`;
-  window.yesBtn.textContent = pleas[pleaLevel];
-  window.yesBtn.style.transform = `scale(${1 + pleaLevel * 0.35})`;
+body.location::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("house.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+  z-index: 0;
 }
 
-function accept() {
-  document.getElementById("valentine").play().catch(() => {});
-  window.questionText.style.display = "none";
-  window.choiceButtons.style.display = "none";
-  window.afterYes.classList.remove("hidden");
-  startHeartsBurst();
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  pointer-events: none;
 }
 
-function startHeartsBurst() {
-  let bursts = 0;
-  const interval = setInterval(() => {
-    for (let i = 0; i < 8; i++) {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.textContent = "❤️";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.position = "fixed";
-      heart.style.top = "-5vh";
-      heart.style.animation = "fall 3s linear forwards";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 3000);
-    }
-    if (++bursts > 15) clearInterval(interval);
-  }, 200);
+.container {
+  max-width: 420px;
+  padding: 30px;
+  border: 1px solid #444;
+  position: relative;
+  z-index: 10;
+  background: rgba(15, 15, 15, 0.9);
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  margin-top: 15px;
+  background: #111;
+  border: 1px solid #555;
+  color: #fff;
+  font-size: 16px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  font-weight: bold;
+}
+
+.error {
+  margin-top: 10px;
+  color: #ff6666;
+}
+
+/* CINEMATIC & BLACKOUT FIX */
+#login-ui.hidden {
+  display: none !important;
+}
+
+body.blackout {
+  background: black !important;
+}
+
+body.blackout::before {
+  display: none !important;
+}
+
+/* SMASH THE GHOST BOX */
+body.blackout .container {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  outline: none !important;
+}
+
+.fade-text {
+  font-family: "Courier New", monospace;
+  color: white;
+  font-size: 1.8rem;
+  animation: fadeInOut 5s forwards;
+  text-align: center;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.bottom-text {
+  position: fixed;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+/* UNLOCKED STATE */
+body.unlocked {
+  background: #ffffff !important;
+  color: #222 !important;
+  font-family: Georgia, serif;
+}
+
+body.unlocked::before {
+  display: none !important;
+}
+
+body.unlocked .container {
+  border: none !important;
+  background: transparent !important;
+  max-width: 600px;
+}
+
+.question {
+  font-size: 2em;
+  margin-top: 30px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 40px;
+}
+
+.yes {
+  background: #ff4d6d;
+  color: white;
+  border-radius: 50px;
+  border: none;
+  padding: 15px 30px;
+}
+
+.no {
+  background: #ccc;
+  color: #333;
+  border-radius: 50px;
+  border: none;
+  padding: 15px 30px;
+}
+
+.hidden { display: none; }
+
+.icon-row {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 60px;
+}
+
+.icon { font-size: 4.5em; position: relative; }
+
+.heart {
+  position: fixed;
+  color: #ff4d6d;
+  font-size: 20px;
+  z-index: 9999;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh); opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0; }
 }
