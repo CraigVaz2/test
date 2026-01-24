@@ -1,23 +1,42 @@
-console.log("Script loaded and running!");
+// 1. GLOBAL VARIABLES AT THE TOP
+let pleaLevel = 0;
+const pleas = [
+  "Yes ❤️",
+  "Please ❤️",
+  "Pretty please ❤️",
+  "Pretty please with sprinkles ❤️",
+  "Please… it’s you ❤️",
+  "Okay fine ❤️"
+];
 
 function checkCode() {
-  const input = document.getElementById("codeInput").value.trim();
+  console.log("CheckCode triggered"); // CHECK CONSOLE FOR THIS
+  const inputElement = document.getElementById("codeInput");
+  if (!inputElement) {
+      console.error("Could not find codeInput field");
+      return;
+  }
+  
+  const input = inputElement.value.trim();
   const loginUI = document.getElementById("login-ui");
   const cinematicText = document.getElementById("cinematic-text");
   const overlay = document.getElementById("bg-overlay");
 
   if (input === "21426") {
-    loginUI.classList.add("hidden");
-    cinematicText.classList.remove("hidden");
+    console.log("Correct code entered");
+    
+    // UI Transitions
+    if (loginUI) loginUI.classList.add("hidden");
+    if (cinematicText) cinematicText.classList.remove("hidden");
     if (overlay) overlay.remove(); 
     document.body.classList.add("blackout");
 
-    // Sequence with adjusted positions
+    // Cinematic Sequence
     setTimeout(() => { showCinematic("Do you see the suspect?", false); }, 1000);
     setTimeout(() => { showCinematic("Look closely...", false); }, 6000);
-    // This one goes to the bottom for the reflection
     setTimeout(() => { showCinematic("Its you.....", true); }, 11000); 
 
+    // Final Reveal
     setTimeout(() => {
       document.body.className = "unlocked"; 
       document.body.style.background = "#fff";
@@ -39,7 +58,7 @@ function checkCode() {
         </div>
       `;
       
-      // FIX: Manually re-assigning buttons to global variables
+      // Refresh global references for the buttons
       window.yesBtn = document.getElementById("yesBtn");
       window.noBtn = document.getElementById("noBtn");
       window.questionText = document.getElementById("questionText");
@@ -61,77 +80,42 @@ function showCinematic(text, isBottom) {
 }
 
 function attachValentineLogic() {
-  // Use window variables to ensure the resist/accept functions can see them
   if (window.noBtn) {
     window.noBtn.addEventListener("mouseover", resist);
     window.noBtn.addEventListener("click", resist);
     window.noBtn.addEventListener("touchstart", resist);
   }
-  
   if (window.yesBtn) {
     window.yesBtn.addEventListener("click", accept); 
   }
 }
-// Ensure the "accept" function you already have handles the music and hearts.
 
-/* =====================
-   UNLOCKED PAGE SETUP
-   ===================== */
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const questionText = document.getElementById("questionText");
-const choiceButtons = document.getElementById("choiceButtons");
-const afterYes = document.getElementById("afterYes");
-
-let pleaLevel = 0;
-
-const pleas = [
-  "Yes ❤️",
-  "Please ❤️",
-  "Pretty please ❤️",
-  "Pretty please with sprinkles ❤️",
-  "Please… it’s you ❤️",
-  "Okay fine ❤️"
-];
-
-// 1. ATTACH CLICKS TO BUTTONS
-if (noBtn) {
-  noBtn.addEventListener("mouseover", resist);
-  noBtn.addEventListener("click", resist);
-  noBtn.addEventListener("touchstart", resist);
-}
-
-if (yesBtn) {
-  yesBtn.addEventListener("click", function() {
-    console.log("Yes button was clicked!");
-    accept(); 
-  });
-}
-
-// 2. THE RESIST FUNCTION (Moves the No button)
 function resist(e) {
   if (e) e.preventDefault();
-  // We use window.pleaLevel to track globally
-  if (typeof window.pleaLevel === 'undefined') window.pleaLevel = 0;
-  
-  window.pleaLevel = Math.min(window.pleaLevel + 1, pleas.length - 1);
+  pleaLevel = Math.min(pleaLevel + 1, pleas.length - 1);
 
-  window.noBtn.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 120 - 60}px) scale(${1 - window.pleaLevel * 0.15})`;
-  window.yesBtn.textContent = pleas[window.pleaLevel];
-  window.yesBtn.style.transform = `scale(${1 + window.pleaLevel * 0.35})`;
+  if (window.noBtn && window.yesBtn) {
+    window.noBtn.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 120 - 60}px) scale(${1 - pleaLevel * 0.15})`;
+    window.yesBtn.textContent = pleas[pleaLevel];
+    window.yesBtn.style.transform = `scale(${1 + pleaLevel * 0.35})`;
+  }
 }
 
-// 3. THE ACCEPT FUNCTION (Plays music and shows hearts)
 function accept() {
   const song = document.getElementById("valentine");
   if (song) {
     song.play().catch(e => console.log("Audio play blocked"));
   }
 
-  window.questionText.style.display = "none";
-  window.choiceButtons.style.display = "none";
-  window.afterYes.classList.remove("hidden");
-  window.afterYes.style.display = "block";
+  if (window.questionText) window.questionText.style.display = "none";
+  if (window.choiceButtons) window.choiceButtons.style.display = "none";
+  if (window.afterYes) {
+    window.afterYes.classList.remove("hidden");
+    window.afterYes.style.display = "block";
+  }
+  
+  startHeartsBurst();
+}
   
   startHeartsBurst();
 }
