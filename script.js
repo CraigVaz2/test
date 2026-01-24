@@ -7,19 +7,17 @@ function checkCode() {
   const overlay = document.getElementById("bg-overlay");
 
   if (input === "21426") {
-    // 1. CLEAR EVERYTHING & FADE TO BLACK
     loginUI.classList.add("hidden");
     cinematicText.classList.remove("hidden");
-    if (overlay) overlay.remove(); // Removes the invisible wall
-    document.body.classList.add("blackout"); // Removes the door image
+    if (overlay) overlay.remove(); 
+    document.body.classList.add("blackout");
 
-    // 2. CINEMATIC SEQUENCE (New Slower Timing)
-    // Total sequence is now about 15 seconds
-    setTimeout(() => { showCinematic("Do you see the suspect?"); }, 1000);
-    setTimeout(() => { showCinematic("Look closely..."); }, 6000); // 5s gap
-    setTimeout(() => { showCinematic("Its you....."); }, 11000); // 5s gap
+    // Sequence with adjusted positions
+    setTimeout(() => { showCinematic("Do you see the suspect?", false); }, 1000);
+    setTimeout(() => { showCinematic("Look closely...", false); }, 6000);
+    // This one goes to the bottom for the reflection
+    setTimeout(() => { showCinematic("Its you.....", true); }, 11000); 
 
-    // 3. THE GRAND REVEAL (15 seconds in)
     setTimeout(() => {
       document.body.className = "unlocked"; 
       document.body.style.background = "#fff";
@@ -35,37 +33,43 @@ function checkCode() {
         <div class="after-yes hidden" id="afterYes">
            <div class="icon-row">
              <div class="icon locked">💌<span>🔒</span></div>
-             <div class="icon active" onclick="alert('Dinner at our favorite spot? 7pm!')">📅</div>
+             <div class="icon active" onclick="alert('February 14th: Our Favorite Spot @ 7:00 PM')">📅</div>
              <div class="icon locked">🎁<span>🔒</span></div>
            </div>
         </div>
       `;
       
-      // CRITICAL: Re-attach buttons so they work!
+      // FIX: Manually re-assigning buttons to global variables
+      window.yesBtn = document.getElementById("yesBtn");
+      window.noBtn = document.getElementById("noBtn");
+      window.questionText = document.getElementById("questionText");
+      window.choiceButtons = document.getElementById("choiceButtons");
+      window.afterYes = document.getElementById("afterYes");
+
       attachValentineLogic();
-    }, 15000);
+    }, 16000);
 
   } else {
     document.getElementById("error").textContent = "Access denied.";
   }
 }
 
-function showCinematic(text) {
+function showCinematic(text, isBottom) {
   const cinematicText = document.getElementById("cinematic-text");
-  cinematicText.innerHTML = `<h2 class="fade-text">${text}</h2>`;
+  const positionClass = isBottom ? "bottom-text" : "";
+  cinematicText.innerHTML = `<h2 class="fade-text ${positionClass}">${text}</h2>`;
 }
 
 function attachValentineLogic() {
-  const noBtn = document.getElementById("noBtn");
-  const yesBtn = document.getElementById("yesBtn");
-  
-  if (noBtn) {
-    noBtn.addEventListener("mouseover", resist);
-    noBtn.addEventListener("click", resist);
+  // Use window variables to ensure the resist/accept functions can see them
+  if (window.noBtn) {
+    window.noBtn.addEventListener("mouseover", resist);
+    window.noBtn.addEventListener("click", resist);
+    window.noBtn.addEventListener("touchstart", resist);
   }
   
-  if (yesBtn) {
-    yesBtn.addEventListener("click", accept); 
+  if (window.yesBtn) {
+    window.yesBtn.addEventListener("click", accept); 
   }
 }
 // Ensure the "accept" function you already have handles the music and hearts.
