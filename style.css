@@ -6,7 +6,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-color: #000 !important; /* Forces black immediately */
+  background-color: #000 !important;
 }
 
 /* LOCKED STATE & BACKGROUND */
@@ -23,7 +23,7 @@ body.location::before {
   background-size: cover;
   background-position: center;
   opacity: 0.4;
-  z-index: 0; /* Changed to 0 so it stays above the black body but below container */
+  z-index: 0;
 }
 
 .overlay {
@@ -40,7 +40,7 @@ body.location::before {
   border: 1px solid #444;
   position: relative;
   z-index: 10;
-  background: rgba(15, 15, 15, 0.9); /* Solidified background for the box */
+  background: rgba(15, 15, 15, 0.9);
   text-align: center;
 }
 
@@ -70,7 +70,7 @@ button {
   color: #ff6666;
 }
 
-/* CINEMATIC & BLACKOUT */
+/* CINEMATIC & BLACKOUT FIX */
 #login-ui.hidden {
   display: none !important;
 }
@@ -81,6 +81,12 @@ body.blackout {
 
 body.blackout::before {
   display: none !important;
+}
+
+/* This removes the "Ghost Box" during cinematic */
+body.blackout .container {
+  background: transparent !important;
+  border: none !important;
 }
 
 .fade-text {
