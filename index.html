@@ -6,23 +6,23 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="locked location">
+  <div id="bg-overlay" class="overlay"></div>
 
-  <div class="overlay"></div>
-
-<div class="container" id="main-content">
-  <div id="login-ui">
-    <h1>FINAL LOCATION</h1>
-    <p class="subtitle">Last Known Address</p>
-    <p>You’ve followed every lead.</p>
-    <p>This is the only place left.</p>
-    <p class="warning">Entry requires the correct code.</p>
-    <input type="password" id="codeInput" placeholder="Door Code">
-    <button onclick="checkCode()">Unlock</button>
-    <p id="error" class="error"></p>
+  <div class="container" id="main-content">
+    <div id="login-ui">
+      <h1 style="letter-spacing: 5px;">LOCKED</h1>
+      <p class="warning">Enter the code to proceed.</p>
+      <input type="password" id="codeInput" placeholder="•••••">
+      <button onclick="checkCode()">Unlock</button>
+      <p id="error" class="error"></p>
+    </div>
+    
+    <div id="cinematic-text" class="hidden"></div>
   </div>
-  
-  <div id="cinematic-text" class="hidden"></div>
-</div>
+
+  <audio id="valentine" preload="auto">
+    <source src="./valentine.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="script.js"></script>
 </body>
