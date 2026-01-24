@@ -9,7 +9,7 @@ body {
   background-color: #000 !important;
 }
 
-/* LOCKED STATE */
+/* LOCKED STATE & BACKGROUND */
 body.locked {
   color: #eaeaea;
   font-family: "Courier New", monospace;
@@ -44,14 +44,15 @@ body.location::before {
   text-align: center;
 }
 
-/* INPUT / BUTTON */
 input {
   width: 100%;
+  box-sizing: border-box;
   padding: 10px;
   margin-top: 15px;
   background: #111;
   border: 1px solid #555;
   color: #fff;
+  font-size: 16px;
 }
 
 button {
@@ -64,13 +65,58 @@ button {
   font-weight: bold;
 }
 
-/* ERROR */
 .error {
   margin-top: 10px;
   color: #ff6666;
 }
 
-/* UNLOCKED */
+/* CINEMATIC & BLACKOUT FIX */
+#login-ui.hidden {
+  display: none !important;
+}
+
+body.blackout {
+  background: black !important;
+}
+
+body.blackout::before {
+  display: none !important;
+}
+
+/* SMASH THE GHOST BOX */
+body.blackout .container {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  outline: none !important;
+}
+
+.fade-text {
+  font-family: "Courier New", monospace;
+  color: white;
+  font-size: 1.8rem;
+  animation: fadeInOut 5s forwards;
+  text-align: center;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.bottom-text {
+  position: fixed;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+/* UNLOCKED STATE */
 body.unlocked {
   background: #ffffff !important;
   color: #222 !important;
@@ -103,6 +149,7 @@ body.unlocked .container {
   background: #ff4d6d;
   color: white;
   border-radius: 50px;
+  border: none;
   padding: 15px 30px;
 }
 
@@ -110,6 +157,7 @@ body.unlocked .container {
   background: #ccc;
   color: #333;
   border-radius: 50px;
+  border: none;
   padding: 15px 30px;
 }
 
@@ -122,23 +170,8 @@ body.unlocked .container {
   margin-top: 60px;
 }
 
-.icon {
-  font-size: 4.5em;
-  position: relative;
-}
+.icon { font-size: 4.5em; position: relative; }
 
-.icon span {
-  position: absolute;
-  bottom: -10px;
-  right: -10px;
-  font-size: 0.6em;
-}
-
-.icon.locked {
-  opacity: 0.5;
-}
-
-/* HEARTS */
 .heart {
   position: fixed;
   color: #ff4d6d;
