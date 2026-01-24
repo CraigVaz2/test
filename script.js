@@ -11,16 +11,20 @@ function checkCode() {
     cinematicText.classList.remove("hidden");
     document.body.classList.add("blackout");
 
+    // Cinematic Sequence
     setTimeout(() => { showCinematic("Do you see the suspect?", false); }, 1000);
     setTimeout(() => { showCinematic("Look closely...", false); }, 6500);
     setTimeout(() => { showCinematic("Its you.....", true); }, 12000); 
+    
+    // New Cinematic Shot for the punchline
+    setTimeout(() => { showCinematic("...because you stole my heart 😝", false); }, 17500); 
 
+    // Final Reveal (Now at 23 seconds)
     setTimeout(() => {
       document.body.className = "unlocked"; 
-      document.body.style.background = "#fff";
-      document.getElementById("main-content").innerHTML = `
-        <h1 style="color: #222; font-family: Georgia, serif;">...because you stole my heart.</h1>
-        <p class="question" id="questionText">Will you be my Valentine?</p>
+      const mainContent = document.getElementById("main-content");
+      mainContent.innerHTML = `
+        <p class="question" id="questionText" style="font-family: Georgia, serif; font-size: 2.5em;">Will you be my Valentine?</p>
         <div class="buttons" id="choiceButtons">
           <button class="yes" id="yesBtn">Yes ❤️</button>
           <button class="no" id="noBtn">No</button>
@@ -42,7 +46,7 @@ function checkCode() {
       window.noBtn.addEventListener("mouseover", resist);
       window.noBtn.addEventListener("click", resist);
       window.yesBtn.addEventListener("click", accept);
-    }, 18000);
+    }, 23000);
   } else {
     document.getElementById("error").textContent = "Access denied.";
   }
@@ -55,10 +59,25 @@ function showCinematic(text, isBottom) {
 
 function resist(e) {
   if (e) e.preventDefault();
-  pleaLevel = Math.min(pleaLevel + 1, pleas.length - 1);
-  window.noBtn.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 120 - 60}px) scale(${1 - pleaLevel * 0.15})`;
-  window.yesBtn.textContent = pleas[pleaLevel];
-  window.yesBtn.style.transform = `scale(${1 + pleaLevel * 0.35})`;
+  pleaLevel++; // Remove the limit so it keeps growing
+  
+  const moveX = Math.random() * 300 - 150;
+  const moveY = Math.random() * 200 - 100;
+  
+  // No button shrinks and flies away
+  window.noBtn.style.transform = `translate(${moveX}px, ${moveY}px) scale(${Math.max(0.2, 1 - pleaLevel * 0.1)})`;
+  window.noBtn.style.opacity = Math.max(0.3, 1 - pleaLevel * 0.1);
+
+  // Yes button grows significantly larger
+  const newScale = 1 + (pleaLevel * 0.6); // Increased growth rate
+  window.yesBtn.style.transform = `scale(${newScale})`;
+  
+  // Update text from your pleas array
+  if (pleas[pleaLevel]) {
+    window.yesBtn.textContent = pleas[pleaLevel];
+  } else {
+    window.yesBtn.textContent = "JUST SAY YES ❤️";
+  }
 }
 
 function accept() {
