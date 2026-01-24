@@ -6,15 +6,36 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="locked location">
-  <div id="bg-overlay" class="overlay"></div>
+  <script>
+    // Audio Unlock Logic
+    let audioContextResumed = false;
+    document.addEventListener('click', function resumeAudio() {
+      if (!audioContextResumed) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          const audioContext = new AudioContext();
+          if (audioContext.state === 'suspended') audioContext.resume();
+        }
+        const audio = document.getElementById('valentine');
+        if (audio) {
+          audio.play().then(() => {
+            audio.pause();
+            audio.currentTime = 0;
+          }).catch(e => console.log("Audio ready"));
+        }
+        audioContextResumed = true;
+        document.removeEventListener('click', resumeAudio);
+      }
+    }, { once: true });
+  </script>
 
   <div class="container" id="main-content">
     <div id="login-ui">
       <h1 style="letter-spacing: 5px;">LOCKED</h1>
-      <p class="warning">Enter the code to proceed.</p>
+      <p>Enter the code to proceed.</p>
       <input type="password" id="codeInput" placeholder="•••••">
       <button type="button" onclick="checkCode()">Unlock</button>
-      <p id="error" class="error"></p>
+      <p id="error" class="error" style="color: #ff6666; margin-top: 10px;"></p>
     </div>
     <div id="cinematic-text" class="hidden"></div>
   </div>
