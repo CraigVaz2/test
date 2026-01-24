@@ -1,5 +1,14 @@
 let pleaLevel = 0;
-const pleas = ["Yes ❤️", "Please ❤️", "Pretty please ❤️", "Pretty please with sprinkles ❤️", "Please… it’s you ❤️", "Okay fine ❤️"];
+// Updated with your requested puppy eyes 🥺
+const pleas = [
+  "Yes ❤️", 
+  "Please 🥺", 
+  "Pretty please 🥺", 
+  "Please please please 🥺", 
+  "Don't do this 🥺", 
+  "You have to say yes 🥺", 
+  "I'm begging 🥺"
+];
 
 function checkCode() {
   const input = document.getElementById("codeInput").value.trim();
@@ -11,15 +20,15 @@ function checkCode() {
     cinematicText.classList.remove("hidden");
     document.body.classList.add("blackout");
 
-    // Cinematic Sequence
+    // Cinematic Sequence - 5.5 second gaps for suspense
     setTimeout(() => { showCinematic("Do you see the suspect?", false); }, 1000);
     setTimeout(() => { showCinematic("Look closely...", false); }, 6500);
     setTimeout(() => { showCinematic("Its you.....", true); }, 12000); 
     
-    // New Cinematic Shot for the punchline
+    // Punchline shot with emoji 😝
     setTimeout(() => { showCinematic("...because you stole my heart 😝", false); }, 17500); 
 
-    // Final Reveal (Now at 23 seconds)
+    // Final Reveal at 23 seconds
     setTimeout(() => {
       document.body.className = "unlocked"; 
       const mainContent = document.getElementById("main-content");
@@ -59,32 +68,37 @@ function showCinematic(text, isBottom) {
 
 function resist(e) {
   if (e) e.preventDefault();
-  pleaLevel++; // Remove the limit so it keeps growing
+  pleaLevel++;
   
   const moveX = Math.random() * 300 - 150;
   const moveY = Math.random() * 200 - 100;
   
-  // No button shrinks and flies away
-  window.noBtn.style.transform = `translate(${moveX}px, ${moveY}px) scale(${Math.max(0.2, 1 - pleaLevel * 0.1)})`;
-  window.noBtn.style.opacity = Math.max(0.3, 1 - pleaLevel * 0.1);
+  // No button shrinks
+  window.noBtn.style.transform = `translate(${moveX}px, ${moveY}px) scale(${Math.max(0.3, 1 - pleaLevel * 0.1)})`;
 
-  // Yes button grows significantly larger
-  const newScale = 1 + (pleaLevel * 0.6); // Increased growth rate
+  // Yes button grows (Higher multiplier to ensure it covers the page)
+  const newScale = 1 + (pleaLevel * 1.5); 
   window.yesBtn.style.transform = `scale(${newScale})`;
   
-  // Update text from your pleas array
+  // High Z-index so it eventually covers everything
+  if (pleaLevel > 5) window.yesBtn.style.zIndex = "99999";
+
+  // Update text with puppy eyes
   if (pleas[pleaLevel]) {
     window.yesBtn.textContent = pleas[pleaLevel];
   } else {
-    window.yesBtn.textContent = "JUST SAY YES ❤️";
+    window.yesBtn.textContent = "PLEASE 🥺";
   }
 }
 
 function accept() {
   document.getElementById("valentine").play().catch(() => {});
+  // Hide UI
   window.questionText.style.display = "none";
   window.choiceButtons.style.display = "none";
+  // Show Icons
   window.afterYes.classList.remove("hidden");
+  window.afterYes.style.display = "block";
   startHeartsBurst();
 }
 
