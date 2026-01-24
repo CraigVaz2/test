@@ -6,7 +6,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-color: #000;
+  background-color: #000 !important;
 }
 
 /* LOCKED STATE */
@@ -26,26 +26,25 @@ body.location::before {
   z-index: 0;
 }
 
-/* OVERLAY */
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1;
+  pointer-events: none;
 }
 
-/* CONTAINER */
 .container {
   max-width: 420px;
   padding: 30px;
   border: 1px solid #444;
-  background: rgba(15, 15, 15, 0.9);
   position: relative;
-  z-index: 5;
+  z-index: 10;
+  background: rgba(15, 15, 15, 0.9);
   text-align: center;
 }
 
-/* INPUT */
+/* INPUT / BUTTON */
 input {
   width: 100%;
   padding: 10px;
@@ -55,14 +54,14 @@ input {
   color: #fff;
 }
 
-/* BUTTON */
 button {
   margin-top: 15px;
   padding: 10px 20px;
+  cursor: pointer;
   background: #ff4d6d;
   color: white;
   border: none;
-  cursor: pointer;
+  font-weight: bold;
 }
 
 /* ERROR */
@@ -71,54 +70,84 @@ button {
   color: #ff6666;
 }
 
-/* ======================
-   CINEMATIC MODE (FIX)
-====================== */
-
-body.blackout {
-  background: black;
+/* UNLOCKED */
+body.unlocked {
+  background: #ffffff !important;
+  color: #222 !important;
+  font-family: Georgia, serif;
 }
 
-body.blackout::before {
-  display: none;
+body.unlocked::before {
+  display: none !important;
 }
 
-body.blackout .overlay {
-  display: none;
-}
-
-/* 🔥 THIS KILLS THE BOX */
-.cinematic-mode {
-  background: none !important;
+body.unlocked .container {
   border: none !important;
-  padding: 0 !important;
-  box-shadow: none !important;
+  background: transparent !important;
+  max-width: 600px;
 }
 
-/* CINEMATIC TEXT */
-#cinematic-text {
-  position: fixed;
-  inset: 0;
+.question {
+  font-size: 2em;
+  margin-top: 30px;
+}
+
+.buttons {
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 999;
+  gap: 50px;
+  margin-top: 40px;
 }
 
-.fade-text {
+.yes {
+  background: #ff4d6d;
   color: white;
-  font-size: 2rem;
-  font-family: "Courier New", monospace;
-  animation: fadeInOut 5s forwards;
+  border-radius: 50px;
+  padding: 15px 30px;
 }
 
-@keyframes fadeInOut {
-  0% { opacity: 0; }
-  30% { opacity: 1; }
-  70% { opacity: 1; }
-  100% { opacity: 0; }
+.no {
+  background: #ccc;
+  color: #333;
+  border-radius: 50px;
+  padding: 15px 30px;
 }
 
-.hidden {
-  display: none;
+.hidden { display: none; }
+
+.icon-row {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 60px;
+}
+
+.icon {
+  font-size: 4.5em;
+  position: relative;
+}
+
+.icon span {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  font-size: 0.6em;
+}
+
+.icon.locked {
+  opacity: 0.5;
+}
+
+/* HEARTS */
+.heart {
+  position: fixed;
+  color: #ff4d6d;
+  font-size: 20px;
+  z-index: 9999;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh); opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0; }
 }
