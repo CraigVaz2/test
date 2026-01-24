@@ -1,3 +1,4 @@
+/* Reset */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -32,7 +33,7 @@ body {
 
 .hidden { display: none !important; }
 
-/* LOGIN BOX */
+/* Login */
 .login-box {
   background: rgba(20, 20, 20, 0.95);
   padding: 40px;
@@ -59,42 +60,25 @@ button {
   cursor: pointer;
 }
 
-/* CINEMATIC TEXT */
-.fade-text { animation: fadeInOut 4s forwards; font-size: 1.8rem; }
-.bottom-text { position: absolute; bottom: 15%; width: 100%; }
-.reveal-text { font-size: 2.2rem; color: #ff4d6d; }
+.error { color: #ff4d6d; font-size: 0.8rem; margin-top: 10px; }
+
+/* Cinematic */
+.fade-text { animation: fadeInOut 5s forwards; font-size: 1.8rem; color: white; }
+.bottom-text { position: absolute; bottom: 10%; left: 0; right: 0; }
+.pink-text { color: #ff4d6d !important; font-size: 2.2rem; font-weight: bold; }
 
 @keyframes fadeInOut { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
 
-/* PROPOSAL SCREEN (Pure White) */
-#proposal-screen {
-  background: white !important;
-  color: #222;
-  font-family: Georgia, serif;
-}
-
+/* Proposal */
+#proposal-screen { background: white !important; color: #222 !important; font-family: Georgia, serif; }
 .question { font-size: 2.5rem; margin-bottom: 30px; }
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  min-height: 200px;
-}
-
-.yes { padding: 15px 30px; border-radius: 50px; font-weight: bold; font-size: 1.2rem; transition: transform 0.2s; }
-.no { padding: 15px 30px; background: #eee; color: #333; border-radius: 50px; border: none; font-size: 1.1rem; }
+.buttons { display: flex; justify-content: center; align-items: center; gap: 30px; min-height: 200px; }
+.yes { padding: 15px 30px; border-radius: 50px; border: none; background: #ff4d6d; color: white; font-weight: bold; cursor: pointer; }
+.no { padding: 15px 30px; background: #eee; color: #333; border-radius: 50px; border: none; cursor: pointer; }
 
 .icon-row { display: flex; gap: 40px; justify-content: center; margin-top: 40px; }
-.icon { font-size: 3rem; position: relative; }
-.icon.locked { opacity: 0.2; }
-.icon span { font-size: 1rem; position: absolute; bottom: 0; right: 0; }
+.icon-active { font-size: 3rem; cursor: pointer; }
+.icon-locked { font-size: 3rem; opacity: 0.2; }
 
-.heart {
-  position: fixed;
-  color: #ff4d6d;
-  z-index: 100;
-  animation: fall 3s linear forwards;
-}
+.heart { position: fixed; color: #ff4d6d; z-index: 100; animation: fall 3s linear forwards; }
 @keyframes fall { to { transform: translateY(110vh); opacity: 0; } }
