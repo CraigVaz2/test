@@ -3,38 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valentine</title>
+  <title>Valentine's 2026</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="locked">
 
-  <div id="screen-login" class="active">
-    <div class="box">
+  <div id="bg-image"></div>
+
+  <div id="login-screen" class="screen">
+    <div class="login-box">
       <h1>LOCKED</h1>
-      <p>Enter Code:</p>
-      <input type="text" id="passcode" placeholder="00000">
-      <button onclick="checkCode()">Unlock</button>
-      <p id="error-msg" style="color: red;"></p>
+      <p>Enter the code to proceed.</p>
+      <input type="text" id="passcode" placeholder="•••••">
+      <button onclick="unlock()">Unlock</button>
+      <p id="error-msg" class="error"></p>
     </div>
   </div>
 
-  <div id="screen-cinematic" class="hidden">
+  <div id="cinematic-screen" class="screen hidden">
     <div id="cinematic-content"></div>
   </div>
 
-  <div id="screen-question" class="hidden">
-    <h1>...because you stole my heart.</h1>
-    <p>Will you be my Valentine?</p>
-    <div class="button-row">
-      <button id="yes-btn">Yes ❤️</button>
-      <button id="no-btn">No</button>
+  <div id="proposal-screen" class="screen hidden">
+    <div class="container">
+      <h1>You Found It.</h1>
+      <p>I was hoping you would.</p>
+      <p>Some things are easier to hide than to say.</p>
+      <p class="question" id="questionText">Will you be my Valentine?</p>
+
+      <div class="buttons" id="choiceButtons">
+        <button class="yes" id="yesBtn">Yes ❤️</button>
+        <button class="no" id="noBtn">No</button>
+      </div>
+
+      <div class="after-yes hidden" id="afterYes">
+        <div class="icon-row">
+          <div class="icon locked">💌<span>🔒</span></div>
+          <div class="icon active" onclick="alert('Feb 14 @ 7:00 PM. I will pick you up! ❤️')">📅</div>
+          <div class="icon locked">🎁<span>🔒</span></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div id="screen-final" class="hidden">
-    <p>Success!</p>
-    <div class="calendar" onclick="alert('Feb 14 @ 7pm!')">📅</div>
-  </div>
+  <audio id="valentine" preload="auto">
+    <source src="valentine.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="script.js"></script>
 </body>
