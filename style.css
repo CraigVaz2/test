@@ -1,84 +1,95 @@
-/* Base Setup */
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
-  margin: 0;
   background: #000;
-  color: #fff;
-  font-family: sans-serif;
   height: 100vh;
+  width: 100vw;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  font-family: "Courier New", monospace;
+  color: white;
+}
+
+#bg-image {
+  position: fixed;
+  inset: 0;
+  background: url('house.jpg') center/cover no-repeat;
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
   text-align: center;
 }
 
-/* Visibility */
 .hidden { display: none !important; }
-.active { display: block; }
 
-/* Box Styling */
-.box {
-  border: 1px solid #444;
+/* LOGIN BOX */
+.login-box {
+  background: rgba(20, 20, 20, 0.95);
   padding: 40px;
-  background: #111;
+  border: 1px solid #444;
+  width: 90%;
+  max-width: 400px;
 }
 
 input {
-  display: block;
-  margin: 20px auto;
+  width: 100%;
   padding: 10px;
-  background: #222;
+  margin: 20px 0;
+  background: #111;
   border: 1px solid #555;
-  color: #fff;
+  color: white;
+  text-align: center;
 }
 
 button {
   padding: 10px 20px;
-  cursor: pointer;
   background: #ff4d6d;
-  color: #fff;
+  color: white;
   border: none;
-  font-weight: bold;
+  cursor: pointer;
 }
 
-/* Cinematic Text */
-#cinematic-content {
-  font-size: 1.5rem;
+/* CINEMATIC */
+.fade-text { animation: fadeInOut 5s forwards; }
+@keyframes fadeInOut { 0% { opacity: 0; } 30% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; } }
+
+/* PROPOSAL SCREEN (White Background) */
+#proposal-screen {
+  background: white !important;
+  color: #222;
+  font-family: Georgia, serif;
 }
 
-.fade-text {
-  animation: fadeInOut 4s forwards;
-}
-
-@keyframes fadeInOut {
-  0% { opacity: 0; }
-  30% { opacity: 1; }
-  70% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-/* Question Screen */
-#screen-question {
-  background: #fff;
-  color: #000;
-  position: fixed;
-  inset: 0;
+.buttons {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-}
-
-.button-row {
-  display: flex;
-  gap: 20px;
-  margin-top: 20px;
+  gap: 30px;
+  margin-top: 30px;
   min-height: 100px;
 }
 
-.calendar {
-  font-size: 5rem;
-  cursor: pointer;
-  margin-top: 20px;
+.yes { border-radius: 50px; font-weight: bold; }
+.no { background: #eee; color: #333; border-radius: 50px; }
+
+.icon-row { display: flex; gap: 40px; justify-content: center; margin-top: 40px; }
+.icon { font-size: 3rem; position: relative; }
+.icon.locked { opacity: 0.2; }
+.icon span { font-size: 1rem; position: absolute; bottom: 0; right: 0; }
+
+.heart {
+  position: fixed;
+  color: #ff4d6d;
+  z-index: 100;
+  animation: fall 3s linear forwards;
 }
+@keyframes fall { to { transform: translateY(110vh); opacity: 0; } }
