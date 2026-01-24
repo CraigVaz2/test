@@ -1,75 +1,52 @@
-let pleaCount = 0;
-const pleas = ["Yes ❤️", "Please ❤️", "Pretty please ❤️", "Please… it’s you ❤️", "I'm begging ❤️"];
-
-function unlock() {
-  const code = document.getElementById('codeInput').value;
+function checkCode() {
+  const code = document.getElementById("passcode").value;
   if (code === "21426") {
-    // 1. Hide Login and Background
-    document.getElementById('login-screen').classList.add('hidden');
-    document.getElementById('bg-image').style.display = 'none';
-    
-    // 2. Start Cinematic
-    document.getElementById('cinematic-screen').classList.remove('hidden');
-    runCinematic();
+    // Move to Cinematic
+    document.getElementById("screen-login").classList.add("hidden");
+    document.getElementById("screen-cinematic").classList.remove("hidden");
+    startCinematic();
   } else {
-    document.getElementById('error').textContent = "Incorrect Passcode.";
+    document.getElementById("error-msg").innerText = "Wrong code.";
   }
 }
 
-function runCinematic() {
-  const content = document.getElementById('cinematic-content');
-  
-  const sequence = [
-    { text: "Do you see the suspect?", bottom: false, delay: 1000 },
-    { text: "Look closely...", bottom: false, delay: 6500 },
-    { text: "Its you.....", bottom: true, delay: 12000 }
+function startCinematic() {
+  const container = document.getElementById("cinematic-content");
+  const phrases = [
+    "Do you see the suspect?",
+    "Look closely...",
+    "It's you..."
   ];
 
-  sequence.forEach(item => {
+  phrases.forEach((text, i) => {
     setTimeout(() => {
-      content.innerHTML = `<h2 class="fade-in-out ${item.bottom ? 'bottom-text' : ''}">${item.text}</h2>`;
-    }, item.delay);
+      container.innerHTML = `<h2 class="fade-text">${text}</h2>`;
+    }, i * 5000);
   });
 
-  // Final Transition to White Screen
+  // Transition to Question
   setTimeout(() => {
-    document.getElementById('cinematic-screen').classList.add('hidden');
-    document.getElementById('proposal-screen').classList.remove('hidden');
-  }, 18000);
+    document.getElementById("screen-cinematic").classList.add("hidden");
+    document.getElementById("screen-question").classList.remove("hidden");
+    document.getElementById("screen-question").style.display = "flex";
+  }, phrases.length * 5000);
 }
 
-// Logic for No/Yes
-document.addEventListener('DOMContentLoaded', () => {
-  const noBtn = document.getElementById('noBtn');
-  const yesBtn = document.getElementById('yesBtn');
+// Button Logic
+document.addEventListener("DOMContentLoaded", () => {
+  const yesBtn = document.getElementById("yes-btn");
+  const noBtn = document.getElementById("no-btn");
+  let growth = 1;
 
-  const moveNo = () => {
-    pleaCount = Math.min(pleaCount + 1, pleas.length - 1);
-    const x = Math.random() * 200 - 100;
-    const y = Math.random() * 100 - 50;
-    noBtn.style.transform = `translate(${x}px, ${y}px) scale(${1 - (pleaCount * 0.1)})`;
-    yesBtn.style.transform = `scale(${1 + (pleaCount * 0.4)})`;
-    yesBtn.textContent = pleas[pleaCount];
-  };
+  noBtn.addEventListener("click", () => {
+    growth += 0.5;
+    yesBtn.style.transform = `scale(${growth})`;
+    noBtn.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`;
+  });
 
-  noBtn.addEventListener('mouseover', moveNo);
-  noBtn.addEventListener('click', moveNo);
-
-  yesBtn.addEventListener('click', () => {
-    document.getElementById('valentineAudio').play();
-    document.getElementById('main-q').classList.add('hidden');
-    document.querySelector('.btn-group').classList.add('hidden');
-    document.getElementById('success-icons').classList.remove('hidden');
-    
-    // Falling hearts
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "❤️";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.top = "-5vh";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 3000);
-    }, 200);
+  yesBtn.addEventListener("click", () => {
+    document.getElementById("screen-question").classList.add("hidden");
+    document.getElementById("screen-final").classList.remove("hidden");
+    document.getElementById("screen-final").classList.add("active");
   });
 });
