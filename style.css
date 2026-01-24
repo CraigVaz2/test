@@ -325,6 +325,29 @@ body.unlocked {
   background-color: white !important;
 }
 
+/* Remove the box/border during cinematic sequence */
+body.blackout .container {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  max-width: 100vw;
+  width: 100%;
+}
+
+/* Position "Its you" at the bottom */
+.bottom-text {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+/* Ensure buttons are visible after reveal */
+body.unlocked .container {
+  max-width: 600px;
+  margin: auto;
+}
 
 
 
