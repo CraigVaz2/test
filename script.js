@@ -4,28 +4,29 @@ function checkCode() {
   const input = document.getElementById("codeInput").value.trim();
   const loginUI = document.getElementById("login-ui");
   const cinematicText = document.getElementById("cinematic-text");
+  const overlay = document.getElementById("bg-overlay");
 
-  // YOUR NEW PASSWORD
   if (input === "21426") {
-    // 1. Black out the screen and hide the login box
+    // 1. CLEAR EVERYTHING & FADE TO BLACK
     loginUI.classList.add("hidden");
     cinematicText.classList.remove("hidden");
-    document.body.style.background = "black";
-    document.querySelector('.overlay').style.display = "none"; // Remove the dark filter
+    if (overlay) overlay.remove(); // Removes the invisible wall
+    document.body.classList.add("blackout"); // Removes the door image
 
-    // 2. Cinematic Sequence (The timing of each line)
+    // 2. CINEMATIC SEQUENCE (New Slower Timing)
+    // Total sequence is now about 15 seconds
     setTimeout(() => { showCinematic("Do you see the suspect?"); }, 1000);
-    setTimeout(() => { showCinematic("Look closely..."); }, 4500);
-    setTimeout(() => { showCinematic("Its you....."); }, 7500);
+    setTimeout(() => { showCinematic("Look closely..."); }, 6000); // 5s gap
+    setTimeout(() => { showCinematic("Its you....."); }, 11000); // 5s gap
 
-    // 3. The Grand Reveal (Switch to Valentine)
+    // 3. THE GRAND REVEAL (15 seconds in)
     setTimeout(() => {
       document.body.className = "unlocked"; 
       document.body.style.background = "#fff";
       
       const mainContent = document.getElementById("main-content");
       mainContent.innerHTML = `
-        <h1 style="color: #222;">...because you stole my heart.</h1>
+        <h1 style="color: #222; font-family: Georgia, serif;">...because you stole my heart.</h1>
         <p class="question" id="questionText">Will you be my Valentine?</p>
         <div class="buttons" id="choiceButtons">
           <button class="yes" id="yesBtn">Yes ❤️</button>
@@ -34,15 +35,15 @@ function checkCode() {
         <div class="after-yes hidden" id="afterYes">
            <div class="icon-row">
              <div class="icon locked">💌<span>🔒</span></div>
-             <div class="icon active" onclick="openCalendar()">📅</div>
+             <div class="icon active" onclick="alert('Dinner at our favorite spot? 7pm!')">📅</div>
              <div class="icon locked">🎁<span>🔒</span></div>
            </div>
         </div>
       `;
       
-      // Re-link the buttons because they are brand new elements
+      // CRITICAL: Re-attach buttons so they work!
       attachValentineLogic();
-    }, 11000);
+    }, 15000);
 
   } else {
     document.getElementById("error").textContent = "Access denied.";
@@ -64,11 +65,9 @@ function attachValentineLogic() {
   }
   
   if (yesBtn) {
-    // This triggers the hearts and music
     yesBtn.addEventListener("click", accept); 
   }
 }
-
 // Ensure the "accept" function you already have handles the music and hearts.
 
 /* =====================
