@@ -7,7 +7,6 @@
 </head>
 <body class="locked location">
   <script>
-    // Audio Unlock Logic
     let audioContextResumed = false;
     document.addEventListener('click', function resumeAudio() {
       if (!audioContextResumed) {
@@ -18,10 +17,7 @@
         }
         const audio = document.getElementById('valentine');
         if (audio) {
-          audio.play().then(() => {
-            audio.pause();
-            audio.currentTime = 0;
-          }).catch(e => console.log("Audio ready"));
+          audio.play().then(() => { audio.pause(); audio.currentTime = 0; }).catch(e => console.log("Audio ready"));
         }
         audioContextResumed = true;
         document.removeEventListener('click', resumeAudio);
