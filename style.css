@@ -57,14 +57,17 @@ button {
 
 /* UNLOCKED */
 body.unlocked {
-  background-color: #fff;
-  color: #222;
-  font-family: Georgia, serif;
+  background-color: #fdfdfd !important; /* Bright off-white */
+  background-image: url('https://www.transparenttextures.com/patterns/crinkled-paper.png'); /* Wrinkled paper texture */
+  color: #222 !important;
+  transition: background-color 2s ease;
 }
 
 body.unlocked .container {
-  border: none;
-  text-align: center;
+  max-width: none !important;
+  width: 90%;
+  border: none !important;
+  background: transparent !important;
 }
 
 .question {
@@ -92,7 +95,12 @@ body.unlocked .container {
   background: #ff4d6d;
   border: none;
   color: white;
-  font-size: 1.1em;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-size: 1.2em;
+  cursor: pointer;
+  z-index: 10001 !important; /* Keep it above everything */
+  white-space: nowrap; /* Prevent text from wrapping as it gets huge */
 }
 
 .no {
