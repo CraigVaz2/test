@@ -292,15 +292,15 @@ body.location h1 {
   font-family: "Courier New", monospace;
   color: white;
   font-size: 1.8rem;
-  animation: fadeInOut 3s forwards;
+  animation: fadeInOut 4s forwards; /* Slower fade */
   text-align: center;
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: scale(0.9); }
-  20% { opacity: 1; transform: scale(1); }
-  80% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1.1); }
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 #cinematic-text {
@@ -310,9 +310,19 @@ body.location h1 {
   min-height: 200px;
 }
 
-/* Ensure the white screen transition is smooth */
+/* This forces the background to stay black and hides the door image */
+body.blackout {
+  background: black !important;
+}
+
+body.blackout::before {
+  display: none !important; /* This specifically kills the house.jpg */
+}
+
+/* Transition to white screen */
 body.unlocked {
   transition: background-color 2s ease;
+  background-color: white !important;
 }
 
 
