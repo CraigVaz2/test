@@ -6,7 +6,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-color: #0f0f0f; /* Fallback color */
+  background-color: #000 !important; /* Forces black immediately */
 }
 
 /* LOCKED STATE & BACKGROUND */
@@ -22,15 +22,15 @@ body.location::before {
   background-image: url("house.jpg");
   background-size: cover;
   background-position: center;
-  opacity: 0.4; /* Adjusted for visibility */
-  z-index: -1;   /* Keeps it behind everything else */
+  opacity: 0.4;
+  z-index: 0; /* Changed to 0 so it stays above the black body but below container */
 }
 
 .overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
 }
 
@@ -40,7 +40,7 @@ body.location::before {
   border: 1px solid #444;
   position: relative;
   z-index: 10;
-  background: rgba(15, 15, 15, 0.8);
+  background: rgba(15, 15, 15, 0.9); /* Solidified background for the box */
   text-align: center;
 }
 
@@ -52,6 +52,7 @@ input {
   background: #111;
   border: 1px solid #555;
   color: #fff;
+  font-size: 16px;
 }
 
 button {
@@ -112,6 +113,10 @@ body.unlocked {
   font-family: Georgia, serif;
 }
 
+body.unlocked::before {
+  display: none !important;
+}
+
 body.unlocked .container {
   border: none !important;
   background: transparent !important;
@@ -134,18 +139,18 @@ body.unlocked .container {
   background: #ff4d6d;
   color: white;
   border-radius: 50px;
-  transition: transform 0.2s;
+  border: none;
 }
 
 .no {
   background: #ccc;
   color: #333;
   border-radius: 50px;
+  border: none;
 }
 
 .hidden { display: none; }
 
-/* POST-YES */
 .icon-row {
   display: flex;
   justify-content: center;
@@ -154,7 +159,6 @@ body.unlocked .container {
 }
 
 .icon { font-size: 4.5em; position: relative; }
-.icon.locked { opacity: 0.4; }
 
 .heart {
   position: fixed;
