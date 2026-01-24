@@ -18,7 +18,7 @@ function checkCode() {
     setTimeout(() => {
       document.body.className = "unlocked"; 
       document.getElementById("main-content").innerHTML = `
-        <h1 style="color: #222; font-family: Georgia, serif; font-size: 2.5rem;">...because you stole my heart.</h1>
+        <h1 style="color: #222; font-family: Georgia, serif;">...because you stole my heart.</h1>
         <p class="question" id="questionText">Will you be my Valentine?</p>
         <div class="buttons" id="choiceButtons">
           <button class="yes" id="yesBtn">Yes ❤️</button>
@@ -61,13 +61,9 @@ function resist(e) {
 }
 
 function accept() {
-  const audio = document.getElementById("valentine");
-  if (audio) {
-      audio.play().catch(e => console.log("Audio playback failed:", e));
-  }
+  document.getElementById("valentine").play().catch(() => {});
   window.questionText.style.display = "none";
   window.choiceButtons.style.display = "none";
-  document.querySelector("h1").style.display = "none";
   window.afterYes.classList.remove("hidden");
   startHeartsBurst();
 }
