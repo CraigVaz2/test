@@ -1,4 +1,4 @@
-/* 1. RESET & GENERAL */
+/* 1. RESET & INITIAL STATE */
 body {
   margin: 0;
   height: 100vh;
@@ -6,15 +6,12 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-}
-
-/* 2. LOCKED THEME (Black/Spooky) */
-body.locked {
   background-color: #0f0f0f;
   color: #eaeaea;
   font-family: "Courier New", monospace;
 }
 
+/* Background Image Fix */
 body.location::before {
   content: "";
   position: absolute;
@@ -23,28 +20,28 @@ body.location::before {
   background-size: cover;
   background-position: center;
   opacity: 0.25;
-  z-index: 0;
+  z-index: -1; /* Pushes behind the input */
 }
 
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: 1;
-  pointer-events: none !important; /* Critical: allows clicks to pass through */
+/* Login UI Fix */
+#login-ui {
+  position: relative;
+  z-index: 9999;
+  text-align: center;
 }
 
-/* 3. CINEMATIC STATE (Pure Black) */
-body.blackout { background: black !important; }
-body.blackout::before { display: none !important; }
-
-body.blackout .container {
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
+input {
+  width: 80%;
+  padding: 12px;
+  margin: 15px 0;
+  background: #111;
+  border: 1px solid #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
 }
 
-/* 4. UNLOCKED THEME (Bright/Paper) */
+/* 2. UNLOCKED STATE (Bright Paper) */
 body.unlocked {
   background-color: #ffffff !important;
   background-image: url('https://www.transparenttextures.com/patterns/crinkled-paper.png') !important;
@@ -55,6 +52,8 @@ body.unlocked {
   transition: background 1s ease;
 }
 
+body.unlocked::before { display: none !important; }
+
 body.unlocked .container {
   border: none !important;
   background: transparent !important;
@@ -64,9 +63,33 @@ body.unlocked .container {
   z-index: 10;
 }
 
-/* 5. TEXT & ANIMATIONS */
+/* 3. BUTTONS */
+button {
+  padding: 15px 30px;
+  cursor: pointer;
+  border-radius: 50px;
+  border: none;
+  font-weight: bold;
+}
+
+.yes {
+  background: #ff4d6d;
+  color: white;
+  font-size: 1.2rem;
+  z-index: 10001 !important;
+  white-space: nowrap;
+  transition: transform 0.1s ease;
+}
+
+.no {
+  background: #eeeeee;
+  color: #333;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+/* 4. CINEMATIC TEXT */
 .fade-text {
-  font-family: "Courier New", monospace;
   color: white;
   font-size: 1.8rem;
   animation: fadeInOut 5s forwards;
@@ -88,45 +111,21 @@ body.unlocked .container {
   width: 100%;
 }
 
-.question {
-  font-size: 2.5rem;
-  margin-bottom: 40px;
-}
-
-/* 6. BUTTONS */
-button {
-  padding: 15px 30px;
-  cursor: pointer;
-  border-radius: 50px; /* Rounded corners */
-  border: none;
-  font-weight: bold;
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 50px;
-}
-
-.yes {
-  background: #ff4d6d;
-  color: white;
-  font-size: 1.2rem;
-  z-index: 10001 !important;
-  white-space: nowrap;
-  transition: transform 0.1s ease;
-}
-
-.no {
-  background: #eeeeee;
-  color: #333;
-  font-size: 1.2rem;
-  transition: transform 0.2s ease;
-}
-
-/* 7. POST-YES ELEMENTS */
 .hidden { display: none; }
+body.blackout { background: black !important; }
+
+/* 5. HEARTS & ICONS */
+.heart {
+  position: fixed;
+  color: #ff4d6d;
+  font-size: 20px;
+  z-index: 9999;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh); opacity: 0; }
+}
 
 .icon-row {
   display: flex;
@@ -135,19 +134,4 @@ button {
   margin-top: 60px;
 }
 
-.icon { font-size: 4.5em; position: relative; cursor: pointer; }
-.icon span { position: absolute; bottom: -12px; right: -12px; font-size: 0.5em; }
-.icon.locked { opacity: 0.4; cursor: default; }
-
-/* 8. HEARTS */
-.heart {
-  position: fixed;
-  color: #ff4d6d;
-  font-size: 20px;
-  z-index: 9999;
-}
-
-@keyframes fall {
-  0% { transform: translateY(-10vh); opacity: 1; }
-  100% { transform: translateY(110vh); opacity: 0; }
-}
+.icon { font-size: 4.5em; cursor: pointer; position: relative; }
