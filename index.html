@@ -3,24 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Final Location</title>
+  <title>Valentine's 2026</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="locked location">
-  <div id="bg-overlay" class="overlay"></div>
+<body class="locked">
+  <div id="bg-image"></div>
 
-  <div class="container" id="main-content">
-    <div id="login-ui">
-      <h1 style="letter-spacing: 5px;">LOCKED</h1>
-      <p class="warning">Enter the code to proceed.</p>
-      <input type="password" id="codeInput" placeholder="•••••">
-      <button type="button" onclick="checkCode()">Unlock</button>
+  <div id="login-screen" class="screen">
+    <div class="login-box">
+      <h1>LOCKED</h1>
+      <p>Enter the code to proceed.</p>
+      <input type="password" id="codeInput" placeholder="•••••" inputmode="numeric">
+      <button onclick="unlock()">Unlock</button>
       <p id="error" class="error"></p>
     </div>
-    <div id="cinematic-text" class="hidden"></div>
   </div>
 
-  <audio id="valentine" preload="auto">
+  <div id="cinematic-screen" class="screen hidden">
+    <div id="cinematic-content"></div>
+  </div>
+
+  <div id="proposal-screen" class="screen hidden">
+    <div class="proposal-content">
+      <h1>...because you stole my heart.</h1>
+      <p id="main-q">Will you be my Valentine?</p>
+      <div class="btn-group">
+        <button id="yesBtn" class="yes">Yes ❤️</button>
+        <button id="noBtn" class="no">No</button>
+      </div>
+      <div id="success-icons" class="hidden">
+        <div class="icon-row">
+          <div class="icon-locked">💌</div>
+          <div class="icon-active" onclick="alert('Feb 14 @ 7:00 PM. See you then! ❤️')">📅</div>
+          <div class="icon-locked">🎁</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="valentineAudio" preload="auto">
     <source src="./valentine.mp3" type="audio/mpeg">
   </audio>
 
