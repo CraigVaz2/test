@@ -1,84 +1,384 @@
-/* 1. RESET */
+
+/* GENERAL */
 body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background-color: #0f0f0f;
-  color: #eaeaea;
-  font-family: "Courier New", monospace;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-/* 2. THE BACKGROUND (LOCKED) */
-body.locked::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url("house.jpg");
-  background-size: cover;
-  background-position: center;
-  z-index: -1; /* Pushed to the very back */
+/* LOCKED */
+body.locked {
+  background-color: #0f0f0f;
+  color: #eaeaea;
+  font-family: "Courier New", monospace;
 }
 
-/* 3. LOGIN BOX (FORCED TO FRONT) */
-#login-ui {
-  position: relative;
-  z-index: 99999 !important; /* On top of everything */
-  pointer-events: auto !important; /* Forces clicks to work */
-  text-align: center;
+.container {
+  max-width: 420px;
+  padding: 30px;
+  border: 1px solid #444;
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  color: #999;
+  font-size: 0.9em;
 }
 
 input {
-  width: 200px;
-  padding: 12px;
-  margin: 15px 0;
-  background: #111;
-  border: 1px solid #555;
-  color: #fff;
-  text-align: center;
-  pointer-events: auto !important;
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  background: #111;
+  border: 1px solid #555;
+  color: #fff;
 }
 
-/* 4. UNLOCKED (WRINKLED PAPER) */
-body.unlocked {
-  background-color: #ffffff !important;
-  background-image: url('https://www.transparenttextures.com/patterns/crinkled-paper.png') !important;
-  color: #222 !important;
-  font-family: Georgia, serif;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-body.unlocked::before { display: none !important; }
-
-/* 5. BUTTONS */
 button {
-  padding: 15px 30px;
-  cursor: pointer;
-  border-radius: 50px;
-  border: none;
-  font-weight: bold;
+  margin-top: 15px;
+  padding: 10px;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+/* ERROR */
+.error {
+  margin-top: 10px;
+  color: #ff6666;
+}
+
+/* UNLOCKED */
+body.unlocked {
+  background-color: #fff;
+  color: #222;
+  font-family: Georgia, serif;
+}
+
+body.unlocked .container {
+  border: none;
+  text-align: center;
+}
+
+.question {
+  font-size: 1.6em;
+  margin-top: 30px;
+}
+
+/* BUTTON LAYOUT */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 80px;
+  margin-top: 40px;
+}
+
+@media (max-width: 600px) {
+  .buttons {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+/* YES / NO */
+.yes {
+  background: #ff4d6d;
+  border: none;
+  color: white;
+  font-size: 1.1em;
+}
+
+.no {
+  background: #ccc;
+  color: #333;
+  border: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* AFTER YES */
+.hidden {
+  display: none;
+}
+
+.after-yes {
+  margin-top: 40px;
+}
+
+.after-text {
+  font-size: 1.4em;
+  margin-bottom: 20px;
+}
+
+.after-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.after-buttons button {
+  background: #ffb3c6;
+  border: none;
+  padding: 12px;
+  font-size: 1em;
+}
+
+/* HEARTS */
+#hearts-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.heart {
+  position: absolute;
+  color: #ff4d6d;
+  font-size: 20px;
+  animation: fall 4s linear forwards;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+/* LOCATION BACKGROUND */
+body.location {
+  background: radial-gradient(
+      circle at center,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.9)
+    ),
+    linear-gradient(180deg, #111, #000);
+  position: relative;
+}
+
+/* Optional background image support */
+body.location::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("house.jpg"); /* optional */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+  z-index: 0;
+}
+
+/* Dark overlay for creepiness */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+}
+
+/* Foreground content */
+body.location .container {
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #333;
+}
+
+/* Text tweaks */
+body.location h1 {
+  letter-spacing: 4px;
+}
+
+.warning {
+  color: #aaa;
+  font-size: 0.9em;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
 }
 
 .yes {
-  background: #ff4d6d;
-  color: white;
-  z-index: 10001 !important;
-  white-space: nowrap;
+  transition: transform 0.3s ease;
 }
 
-.no { background: #eeeeee; color: #333; }
+.no {
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
 
-/* 6. CINEMATIC TEXT */
-.fade-text { color: white; font-size: 1.8rem; animation: fadeInOut 5s forwards; text-align: center; }
+.icon-row {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 60px;
+}
+
+.icon {
+  font-size: 4em;
+  position: relative;
+}
+
+.icon span {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  font-size: 0.6em;
+}
+
+.icon.locked {
+  opacity: 0.5;
+}
+
+.icon.active {
+  cursor: pointer;
+}
+
+.icon-row {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  margin-top: 60px;
+}
+
+.icon {
+  font-size: 4.5em;
+  position: relative;
+}
+
+.icon span {
+  position: absolute;
+  bottom: -12px;
+  right: -12px;
+  font-size: 0.5em;
+}
+
+.icon.locked {
+  opacity: 0.4;
+}
+
+.icon.active {
+  cursor: pointer;
+}
+
+#choiceButtons {
+  position: relative;
+  z-index: 9999 !important;
+}
+
+.yes, .no {
+  cursor: pointer;
+  position: relative;
+  z-index: 10000 !important;
+}
+
+/* Cinematic Sequence Styles */
+.fade-text {
+  font-family: "Courier New", monospace;
+  color: white;
+  font-size: 1.8rem;
+  animation: fadeInOut 4s forwards; /* Slower fade */
+  text-align: center;
+}
+
 @keyframes fadeInOut {
-  0% { opacity: 0; } 30% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; }
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
 }
-.bottom-text { position: fixed; bottom: 15%; left: 50%; transform: translateX(-50%); width: 100%; }
-.hidden { display: none; }
-body.blackout { background: black !important; }
 
-.heart { position: fixed; color: #ff4d6d; z-index: 9999; animation: fall 3s linear forwards; }
-@keyframes fall { to { transform: translateY(110vh); opacity: 0; } }
+#cinematic-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* This forces the background to stay black and hides the door image */
+body.blackout {
+  background: black !important;
+}
+
+body.blackout::before {
+  display: none !important; /* This specifically kills the house.jpg */
+}
+
+/* Transition to white screen */
+body.unlocked {
+  transition: background-color 2s ease;
+  background-color: white !important;
+}
+
+/* Remove the box/border during cinematic sequence */
+body.blackout .container {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  max-width: 100vw;
+  width: 100%;
+}
+
+/* Position "Its you" at the bottom */
+.bottom-text {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+/* Ensure buttons are visible after reveal */
+body.unlocked .container {
+  max-width: 600px;
+  margin: auto;
+}
+
+.overlay { pointer-events: none !important; }
+
+body.blackout { background: black !important; }
+body.blackout::before { display: none !important; }
+
+body.blackout .container {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.fade-text {
+  font-family: "Courier New", monospace;
+  color: white;
+  font-size: 1.8rem;
+  animation: fadeInOut 5s forwards;
+  text-align: center;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.bottom-text {
+  position: fixed;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
