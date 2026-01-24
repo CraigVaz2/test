@@ -42,6 +42,7 @@ body.location::before {
   z-index: 10;
   background: rgba(15, 15, 15, 0.9);
   text-align: center;
+  transition: all 0.5s ease;
 }
 
 input {
@@ -83,10 +84,11 @@ body.blackout::before {
   display: none !important;
 }
 
-/* This removes the "Ghost Box" during cinematic */
+/* FORCE THE BOX TO VANISH */
 body.blackout .container {
   background: transparent !important;
   border: none !important;
+  box-shadow: none !important;
 }
 
 .fade-text {
@@ -146,6 +148,7 @@ body.unlocked .container {
   color: white;
   border-radius: 50px;
   border: none;
+  padding: 15px 30px;
 }
 
 .no {
@@ -153,6 +156,7 @@ body.unlocked .container {
   color: #333;
   border-radius: 50px;
   border: none;
+  padding: 15px 30px;
 }
 
 .hidden { display: none; }
