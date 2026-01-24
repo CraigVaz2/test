@@ -6,7 +6,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-color: #000 !important;
+  background-color: #000 !important; /* Forces black immediately */
 }
 
 /* LOCKED STATE & BACKGROUND */
@@ -23,7 +23,7 @@ body.location::before {
   background-size: cover;
   background-position: center;
   opacity: 0.4;
-  z-index: 0;
+  z-index: 0; /* Changed to 0 so it stays above the black body but below container */
 }
 
 .overlay {
@@ -40,9 +40,8 @@ body.location::before {
   border: 1px solid #444;
   position: relative;
   z-index: 10;
-  background: rgba(15, 15, 15, 0.9);
+  background: rgba(15, 15, 15, 0.9); /* Solidified background for the box */
   text-align: center;
-  transition: all 0.5s ease;
 }
 
 input {
@@ -71,7 +70,7 @@ button {
   color: #ff6666;
 }
 
-/* CINEMATIC & BLACKOUT FIX */
+/* CINEMATIC & BLACKOUT */
 #login-ui.hidden {
   display: none !important;
 }
@@ -82,13 +81,6 @@ body.blackout {
 
 body.blackout::before {
   display: none !important;
-}
-
-/* FORCE THE BOX TO VANISH */
-body.blackout .container {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
 }
 
 .fade-text {
@@ -148,7 +140,6 @@ body.unlocked .container {
   color: white;
   border-radius: 50px;
   border: none;
-  padding: 15px 30px;
 }
 
 .no {
@@ -156,7 +147,6 @@ body.unlocked .container {
   color: #333;
   border-radius: 50px;
   border: none;
-  padding: 15px 30px;
 }
 
 .hidden { display: none; }
