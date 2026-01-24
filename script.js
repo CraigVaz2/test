@@ -111,41 +111,30 @@ if (yesBtn) {
 // 2. THE RESIST FUNCTION (Moves the No button)
 function resist(e) {
   if (e) e.preventDefault();
+  // We use window.pleaLevel to track globally
+  if (typeof window.pleaLevel === 'undefined') window.pleaLevel = 0;
+  
+  window.pleaLevel = Math.min(window.pleaLevel + 1, pleas.length - 1);
 
-  pleaLevel = Math.min(pleaLevel + 1, pleas.length - 1);
-
-  noBtn.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 120 - 60}px) scale(${1 - pleaLevel * 0.15})`;
-  noBtn.style.opacity = Math.max(0.2, 1 - pleaLevel * 0.2);
-
-  yesBtn.textContent = pleas[pleaLevel];
-  yesBtn.style.transform = `scale(${1 + pleaLevel * 0.35})`;
-
-  if (pleaLevel === pleas.length - 1) {
-    yesBtn.style.position = "fixed";
-    yesBtn.style.top = "0";
-    yesBtn.style.left = "0";
-    yesBtn.style.width = "100vw";
-    yesBtn.style.height = "100vh";
-    yesBtn.style.fontSize = "3em";
-    yesBtn.style.zIndex = "999";
-    yesBtn.style.borderRadius = "0";
-    
-    // Ensure the giant full-screen button also triggers accept
-    yesBtn.onclick = accept;
-  }
+  window.noBtn.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 120 - 60}px) scale(${1 - window.pleaLevel * 0.15})`;
+  window.yesBtn.textContent = pleas[window.pleaLevel];
+  window.yesBtn.style.transform = `scale(${1 + window.pleaLevel * 0.35})`;
 }
 
 // 3. THE ACCEPT FUNCTION (Plays music and shows hearts)
 function accept() {
-  console.log("ACCEPT - Simple version");
-  
-  // Hide/show elements
-  if (questionText) questionText.style.display = "none";
-  if (choiceButtons) choiceButtons.style.display = "none";
-  if (afterYes) {
-    afterYes.classList.remove("hidden");
-    afterYes.style.display = "block";
+  const song = document.getElementById("valentine");
+  if (song) {
+    song.play().catch(e => console.log("Audio play blocked"));
   }
+
+  window.questionText.style.display = "none";
+  window.choiceButtons.style.display = "none";
+  window.afterYes.classList.remove("hidden");
+  window.afterYes.style.display = "block";
+  
+  startHeartsBurst();
+}
   
   // SIMPLE AUDIO PLAY - most reliable
   const audio = document.getElementById('valentine');
