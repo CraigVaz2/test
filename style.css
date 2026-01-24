@@ -59,27 +59,32 @@ button {
   cursor: pointer;
 }
 
-/* CINEMATIC */
-.fade-text { animation: fadeInOut 5s forwards; }
-@keyframes fadeInOut { 0% { opacity: 0; } 30% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; } }
+/* CINEMATIC TEXT */
+.fade-text { animation: fadeInOut 4s forwards; font-size: 1.8rem; }
+.bottom-text { position: absolute; bottom: 15%; width: 100%; }
+.reveal-text { font-size: 2.2rem; color: #ff4d6d; }
 
-/* PROPOSAL SCREEN (White Background) */
+@keyframes fadeInOut { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+
+/* PROPOSAL SCREEN (Pure White) */
 #proposal-screen {
   background: white !important;
   color: #222;
   font-family: Georgia, serif;
 }
 
+.question { font-size: 2.5rem; margin-bottom: 30px; }
+
 .buttons {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 30px;
-  margin-top: 30px;
-  min-height: 100px;
+  min-height: 200px;
 }
 
-.yes { border-radius: 50px; font-weight: bold; }
-.no { background: #eee; color: #333; border-radius: 50px; }
+.yes { padding: 15px 30px; border-radius: 50px; font-weight: bold; font-size: 1.2rem; transition: transform 0.2s; }
+.no { padding: 15px 30px; background: #eee; color: #333; border-radius: 50px; border: none; font-size: 1.1rem; }
 
 .icon-row { display: flex; gap: 40px; justify-content: center; margin-top: 40px; }
 .icon { font-size: 3rem; position: relative; }
