@@ -1,97 +1,80 @@
-/* GENERAL */
-body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background-color: #000 !important; /* Forces black immediately */
+/* RESET & BASE */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+  background: #000; 
+  height: 100vh; 
+  width: 100vw; 
+  overflow: hidden; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
 }
 
-/* LOCKED STATE & BACKGROUND */
-body.locked {
-  color: #eaeaea;
-  font-family: "Courier New", monospace;
-}
-
-body.location::before {
-  content: "";
-  position: absolute;
+/* BACKGROUNDS */
+#bg-image {
+  position: fixed;
   inset: 0;
-  background-image: url("house.jpg");
-  background-size: cover;
-  background-position: center;
-  opacity: 0.4;
-  z-index: 0; /* Changed to 0 so it stays above the black body but below container */
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: url('house.jpg') center/cover no-repeat;
+  opacity: 0.3;
   z-index: 1;
-  pointer-events: none;
 }
 
-.container {
-  max-width: 420px;
-  padding: 30px;
-  border: 1px solid #444;
-  position: relative;
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 10;
-  background: rgba(15, 15, 15, 0.9); /* Solidified background for the box */
+  padding: 20px;
+}
+
+.hidden { display: none !important; }
+
+/* STAGE 1: LOGIN BOX */
+.login-box {
+  background: rgba(20, 20, 20, 0.9);
+  padding: 40px;
+  border: 1px solid #444;
   text-align: center;
+  color: #fff;
+  font-family: "Courier New", monospace;
+  max-width: 350px;
+  width: 100%;
 }
 
 input {
   width: 100%;
-  box-sizing: border-box;
-  padding: 10px;
-  margin-top: 15px;
+  padding: 12px;
+  margin: 20px 0;
   background: #111;
   border: 1px solid #555;
   color: #fff;
-  font-size: 16px;
+  text-align: center;
 }
 
 button {
-  margin-top: 15px;
-  padding: 10px 20px;
+  padding: 12px 24px;
   cursor: pointer;
-  background: #ff4d6d;
-  color: white;
   border: none;
   font-weight: bold;
 }
 
-.error {
-  margin-top: 10px;
-  color: #ff6666;
-}
+.error { color: #ff4d6d; margin-top: 10px; font-size: 0.8rem; }
 
-/* CINEMATIC & BLACKOUT */
-#login-ui.hidden {
-  display: none !important;
-}
-
-body.blackout {
-  background: black !important;
-}
-
-body.blackout::before {
-  display: none !important;
-}
-
-.fade-text {
-  font-family: "Courier New", monospace;
+/* STAGE 2: CINEMATIC */
+#cinematic-content {
   color: white;
+  font-family: "Courier New", monospace;
   font-size: 1.8rem;
-  animation: fadeInOut 5s forwards;
   text-align: center;
 }
 
-@keyframes fadeInOut {
+.fade-in-out {
+  animation: fadeAnim 5s forwards;
+}
+
+@keyframes fadeAnim {
   0% { opacity: 0; }
   30% { opacity: 1; }
   70% { opacity: 1; }
@@ -99,76 +82,43 @@ body.blackout::before {
 }
 
 .bottom-text {
-  position: fixed;
+  position: absolute;
   bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
 }
 
-/* UNLOCKED STATE */
-body.unlocked {
-  background: #ffffff !important;
-  color: #222 !important;
+/* STAGE 3: PROPOSAL */
+#proposal-screen {
+  background: #fff;
+  color: #222;
   font-family: Georgia, serif;
 }
 
-body.unlocked::before {
-  display: none !important;
-}
+.proposal-content { text-align: center; }
+.proposal-content h1 { font-size: 1.5rem; margin-bottom: 10px; }
+.proposal-content p { font-size: 2rem; margin-bottom: 30px; }
 
-body.unlocked .container {
-  border: none !important;
-  background: transparent !important;
-  max-width: 600px;
-}
-
-.question {
-  font-size: 2em;
-  margin-top: 30px;
-}
-
-.buttons {
+.btn-group {
   display: flex;
   justify-content: center;
-  gap: 50px;
-  margin-top: 40px;
+  align-items: center;
+  gap: 30px;
+  min-height: 150px;
 }
 
-.yes {
-  background: #ff4d6d;
-  color: white;
-  border-radius: 50px;
-  border: none;
-}
+.yes { background: #ff4d6d; color: white; border-radius: 50px; transition: 0.2s; }
+.no { background: #eee; color: #333; border-radius: 50px; }
 
-.no {
-  background: #ccc;
-  color: #333;
-  border-radius: 50px;
-  border: none;
-}
-
-.hidden { display: none; }
-
-.icon-row {
-  display: flex;
-  justify-content: center;
-  gap: 60px;
-  margin-top: 60px;
-}
-
-.icon { font-size: 4.5em; position: relative; }
+/* ICONS & HEARTS */
+.icon-row { display: flex; gap: 40px; justify-content: center; margin-top: 40px; }
+.icon-active { font-size: 4rem; cursor: pointer; }
+.icon-locked { font-size: 4rem; opacity: 0.2; }
 
 .heart {
   position: fixed;
   color: #ff4d6d;
   font-size: 20px;
-  z-index: 9999;
+  z-index: 100;
   animation: fall 3s linear forwards;
 }
 
-@keyframes fall {
-  0% { transform: translateY(-10vh); opacity: 1; }
-  100% { transform: translateY(110vh); opacity: 0; }
-}
+@keyframes fall { to { transform: translateY(110vh); opacity: 0; } }
