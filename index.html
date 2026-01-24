@@ -5,8 +5,10 @@
   <title>Final Location</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="locked location">
-  <div id="bg-overlay" class="overlay"></div>
+
+  <div class="overlay"></div>
 
   <div class="container" id="main-content">
     <div id="login-ui">
@@ -16,12 +18,10 @@
       <button type="button" onclick="checkCode()">Unlock</button>
       <p id="error" class="error"></p>
     </div>
+
+    <!-- CINEMATIC TEXT (NO BOX) -->
     <div id="cinematic-text" class="hidden"></div>
   </div>
-
-  <audio id="valentine" preload="auto">
-    <source src="./valentine.mp3" type="audio/mpeg">
-  </audio>
 
   <script src="script.js"></script>
 </body>
