@@ -1,5 +1,5 @@
 let pleaLevel = 0;
-const pleas = ["Yes ❤️", "Please ❤️", "Pretty please ❤️", "Please… it’s you ❤️"];
+const pleas = ["Yes ❤️", "Please ❤️", "Pretty please ❤️", "Please… it’s you ❤️", "JUST SAY YES! ❤️"];
 
 function unlock() {
   const code = document.getElementById('passcode').value;
@@ -8,7 +8,7 @@ function unlock() {
     document.getElementById('bg-image').style.display = 'none';
     document.getElementById('cinematic-screen').classList.remove('hidden');
     
-    // Audio Context Unlock for Browsers
+    // Audio Context Unlock
     const audio = document.getElementById('valentine');
     audio.play().then(() => { audio.pause(); audio.currentTime = 0; }).catch(() => {});
 
@@ -20,19 +20,33 @@ function unlock() {
 
 function runCinematic() {
   const content = document.getElementById('cinematic-content');
-  const frames = ["Do you see the suspect?", "Look closely...", "Its you....."];
   
-  frames.forEach((text, i) => {
-    setTimeout(() => {
-      content.innerHTML = `<h2 class="fade-text">${text}</h2>`;
-    }, i * 5500);
-  });
+  // Frame 1: Center
+  setTimeout(() => {
+    content.innerHTML = `<h2 class="fade-text">Do you see the suspect?</h2>`;
+  }, 500);
 
+  // Frame 2: Center
+  setTimeout(() => {
+    content.innerHTML = `<h2 class="fade-text">Look closely...</h2>`;
+  }, 5500);
+
+  // Frame 3: Bottom
+  setTimeout(() => {
+    content.innerHTML = `<h2 class="fade-text bottom-text">Its you.....</h2>`;
+  }, 10500);
+
+  // Frame 4: Reveal Line
+  setTimeout(() => {
+    content.innerHTML = `<h2 class="fade-text reveal-text">Because you stole my heart 😝</h2>`;
+  }, 15500);
+
+  // Final Transition to Proposal
   setTimeout(() => {
     document.getElementById('cinematic-screen').classList.add('hidden');
     document.getElementById('proposal-screen').classList.remove('hidden');
     setupProposal();
-  }, 17000);
+  }, 20500);
 }
 
 function setupProposal() {
@@ -41,15 +55,23 @@ function setupProposal() {
 
   noBtn.addEventListener('click', () => {
     pleaLevel++;
-    yesBtn.style.transform = `scale(${1 + pleaLevel * 0.5})`;
-    noBtn.style.transform = `translate(${Math.random() * 150 - 75}px, ${Math.random() * 100 - 50}px)`;
+    const growth = 1 + (pleaLevel * 0.5);
+    yesBtn.style.transform = `scale(${growth})`;
+    
+    // Move No button randomly
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 100 - 50;
+    noBtn.style.transform = `translate(${x}px, ${y}px) scale(${Math.max(0.4, 1 - pleaLevel * 0.1)})`;
+    
     if(pleas[pleaLevel]) yesBtn.innerText = pleas[pleaLevel];
   });
 
   yesBtn.addEventListener('click', () => {
-    document.getElementById('valentine').play();
+    const audio = document.getElementById('valentine');
+    if (audio) audio.play();
+    
     document.getElementById('choiceButtons').classList.add('hidden');
-    document.getElementById('questionText').classList.add('hidden');
+    document.getElementById('questionText').innerText = "Yay! ❤️";
     document.getElementById('afterYes').classList.remove('hidden');
     
     setInterval(() => {
