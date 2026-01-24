@@ -1,124 +1,84 @@
-/* RESET & BASE */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { 
-  background: #000; 
-  height: 100vh; 
-  width: 100vw; 
-  overflow: hidden; 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-}
-
-/* BACKGROUNDS */
-#bg-image {
-  position: fixed;
-  inset: 0;
-  background: url('house.jpg') center/cover no-repeat;
-  opacity: 0.3;
-  z-index: 1;
-}
-
-.screen {
-  position: fixed;
-  inset: 0;
+/* Base Setup */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: sans-serif;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
-  padding: 20px;
+  overflow: hidden;
+  text-align: center;
 }
 
+/* Visibility */
 .hidden { display: none !important; }
+.active { display: block; }
 
-/* STAGE 1: LOGIN BOX */
-.login-box {
-  background: rgba(20, 20, 20, 0.9);
-  padding: 40px;
+/* Box Styling */
+.box {
   border: 1px solid #444;
-  text-align: center;
-  color: #fff;
-  font-family: "Courier New", monospace;
-  max-width: 350px;
-  width: 100%;
+  padding: 40px;
+  background: #111;
 }
 
 input {
-  width: 100%;
-  padding: 12px;
-  margin: 20px 0;
-  background: #111;
+  display: block;
+  margin: 20px auto;
+  padding: 10px;
+  background: #222;
   border: 1px solid #555;
   color: #fff;
-  text-align: center;
 }
 
 button {
-  padding: 12px 24px;
+  padding: 10px 20px;
   cursor: pointer;
+  background: #ff4d6d;
+  color: #fff;
   border: none;
   font-weight: bold;
 }
 
-.error { color: #ff4d6d; margin-top: 10px; font-size: 0.8rem; }
-
-/* STAGE 2: CINEMATIC */
+/* Cinematic Text */
 #cinematic-content {
-  color: white;
-  font-family: "Courier New", monospace;
-  font-size: 1.8rem;
-  text-align: center;
+  font-size: 1.5rem;
 }
 
-.fade-in-out {
-  animation: fadeAnim 5s forwards;
+.fade-text {
+  animation: fadeInOut 4s forwards;
 }
 
-@keyframes fadeAnim {
+@keyframes fadeInOut {
   0% { opacity: 0; }
   30% { opacity: 1; }
   70% { opacity: 1; }
   100% { opacity: 0; }
 }
 
-.bottom-text {
-  position: absolute;
-  bottom: 15%;
-}
-
-/* STAGE 3: PROPOSAL */
-#proposal-screen {
+/* Question Screen */
+#screen-question {
   background: #fff;
-  color: #222;
-  font-family: Georgia, serif;
-}
-
-.proposal-content { text-align: center; }
-.proposal-content h1 { font-size: 1.5rem; margin-bottom: 10px; }
-.proposal-content p { font-size: 2rem; margin-bottom: 30px; }
-
-.btn-group {
+  color: #000;
+  position: fixed;
+  inset: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 30px;
-  min-height: 150px;
 }
 
-.yes { background: #ff4d6d; color: white; border-radius: 50px; transition: 0.2s; }
-.no { background: #eee; color: #333; border-radius: 50px; }
-
-/* ICONS & HEARTS */
-.icon-row { display: flex; gap: 40px; justify-content: center; margin-top: 40px; }
-.icon-active { font-size: 4rem; cursor: pointer; }
-.icon-locked { font-size: 4rem; opacity: 0.2; }
-
-.heart {
-  position: fixed;
-  color: #ff4d6d;
-  font-size: 20px;
-  z-index: 100;
-  animation: fall 3s linear forwards;
+.button-row {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  min-height: 100px;
 }
 
-@keyframes fall { to { transform: translateY(110vh); opacity: 0; } }
+.calendar {
+  font-size: 5rem;
+  cursor: pointer;
+  margin-top: 20px;
+}
