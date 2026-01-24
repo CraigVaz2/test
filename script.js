@@ -1,45 +1,60 @@
+/* PASSWORD */
 function checkCode() {
   const input = document.getElementById("codeInput");
   const error = document.getElementById("error");
 
-  if (!input) return;
-
   if (input.value.trim() === "1234") {
-    startCinematic();
+    window.location.href = "unlocked.html";
   } else {
     error.textContent = "Access denied.";
   }
 }
 
-function startCinematic() {
-  const body = document.body;
-  const loginUI = document.getElementById("login-ui");
-  const cinematic = document.getElementById("cinematic-text");
-  const container = document.getElementById("main-content");
+/* YES / NO LOGIC */
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
 
-  // HARD SWITCH TO BLACKOUT
-  body.classList.add("blackout");
+if (noBtn && yesBtn) {
+  let pleaLevel = 0;
 
-  // Kill login UI
-  loginUI.classList.add("hidden");
+  const pleas = [
+    "Yes ❤️",
+    "Please ❤️",
+    "Pretty please ❤️",
+    "Pretty please with sprinkles ❤️",
+    "Please… it’s you ❤️"
+  ];
 
-  // Kill container visuals COMPLETELY
-  container.classList.add("cinematic-mode");
+  noBtn.addEventListener("mouseover", resist);
+  noBtn.addEventListener("click", resist);
 
-  cinematic.classList.remove("hidden");
+  function resist(e) {
+    e.preventDefault();
+    pleaLevel = Math.min(pleaLevel + 1, pleas.length - 1);
 
-  showLine("It was you.", () => {
-    setTimeout(() => {
-      window.location.href = "unlocked.html";
-    }, 1200);
-  });
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 120 - 60;
+
+    noBtn.style.transform =
+      `translate(${x}px, ${y}px) scale(${1 - pleaLevel * 0.15})`;
+    noBtn.style.opacity =
+      Math.max(0.3, 1 - pleaLevel * 0.2);
+
+    yesBtn.textContent = pleas[pleaLevel];
+
+    yesBtn.style.transform =
+      `scale(${1 + pleaLevel * 0.3})`;
+  }
 }
 
-function showLine(text, callback) {
-  const cinematic = document.getElementById("cinematic-text");
-  cinematic.innerHTML = `<div class="fade-text">${text}</div>`;
-
-  setTimeout(() => {
-    if (callback) callback();
-  }, 5000);
+/* HEARTS */
+function startHearts() {
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 3000);
+  }, 200);
 }
